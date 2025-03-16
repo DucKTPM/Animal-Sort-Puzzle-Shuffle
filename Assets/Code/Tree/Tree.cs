@@ -16,15 +16,10 @@ public class Tree : MonoBehaviour
     [SerializeField] private Rigidbody2D rigidbody2D;
     [SerializeField] private List<Animal> animalsCopy = new List<Animal>();
     [SerializeField] private int slot;
+    public List<Animal> AnimalsOnTree=> animalsCopy;    
 
     private int currentAnimal = 0;
-    // private int[] arrayIdAnimals;
-    // private void OnEnable()
-    // {
-    //   // StartSpawnAnimalOnTree(arrayIdAnimals);
-    //    //StartEffectToAppear();
-    // }
-    
+
     public void StartSpawnAnimalOnTree(int[] idAnimals)
     {
         StartCoroutine(IeStartSpawnAnimal(idAnimals));
@@ -60,7 +55,7 @@ public class Tree : MonoBehaviour
             if (viewPostion.x > 0.5f)
             {
                 position.x -= 0.4f;
-                
+
                 var obj = Instantiate(animals[idAnimals[i]], position, Quaternion.identity, parent: transform);
 
                 animalsCopy.Add(obj);
@@ -73,6 +68,7 @@ public class Tree : MonoBehaviour
         StartEffectToAppear();
         yield return null;
     }
+
     public void SetSlot(int slot)
     {
         this.slot = slot;
@@ -94,7 +90,33 @@ public class Tree : MonoBehaviour
         transform.position = Camera.main.ViewportToWorldPoint(viewPostion);
         StartCoroutine(IeStartEffectToAppear(destination));
     }
+    private void StartEffectToClose()
+    {
+        var destination = transform.position;
+        var viewPostion = Camera.main.WorldToViewportPoint(destination);
+        if (viewPostion.x <= 0.5f)
+        {
+            viewPostion.x -= 0.5f;
+        }
+        else if (viewPostion.x > 0.5f)
+        {
+            viewPostion.x += 0.5f;
+        }
+        destination = Camera.main.ViewportToWorldPoint(viewPostion);
+        StartCoroutine(IeStartEffectToClose(destination));
+    }
+    private IEnumerator IeStartEffectToClose(Vector3 destination)
+    {
+        float speed = 5f;
+        while (Vector3.Distance(transform.position, destination) > 0.1f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, destination, speed * Time.deltaTime);
+            yield return new FixedUpdate();
+        }
 
+        transform.position = destination;
+        gameObject.SetActive(false);
+    }
     private IEnumerator IeStartEffectToAppear(Vector3 destination)
     {
         float speed = 5f;
@@ -117,7 +139,7 @@ public class Tree : MonoBehaviour
             {
                 GameView.Instance.AnimalsCancelClicked();
             }
-            else if (animalsCopy.Count > 0)
+            else if (animalsCopy.Count > 0)// nếu cây không đã có  animal
             {
                 if (!CheckSlotFull() && CheckAnimalsSameAnimalOnTree(GameView.Instance.GetAnimalClicked()))
                 {
@@ -130,9 +152,9 @@ public class Tree : MonoBehaviour
                         {
                             position.x -= 0.375f;
                         }
-                
+
                         animalsCopy.Add(animal[i]);
-                        animal[i].Jump(position,0.5f,this);
+                        animal[i].Jump(position, 0.5f, this);
                         if (viewPostion.x <= 0.5f)
                         {
                             position.x += 0.375f;
@@ -140,11 +162,10 @@ public class Tree : MonoBehaviour
 
                         GameView.Instance.RemoveAnimalOnTreeClicked(animal[i]);
                     }
-                  //  ShakeTree();
-           
+                    //  ShakeTree();
                 }
             }
-            else
+            else // nếu không
             {
                 var viewPostion = Camera.main.WorldToViewportPoint(transform.position);
                 var animal = GameView.Instance.GetAnimalsClicked();
@@ -156,15 +177,15 @@ public class Tree : MonoBehaviour
                     }
 
                     animalsCopy.Add(animal[i]);
-                    animal[i].Jump(position,0.5f,this);
+                    animal[i].Jump(position, 0.5f, this);
                     if (viewPostion.x <= 0.5f)
                     {
                         position.x += 0.375f;
                     }
+
                     GameView.Instance.RemoveAnimalOnTreeClicked(animal[i]);
-                    
                 }
-   
+
                 //    GameView.Instance.AnimalsCancelClicked();
             }
 
@@ -175,7 +196,7 @@ public class Tree : MonoBehaviour
 
             GameView.Instance.AnimalsCancelClicked();
         }
-        else if (!stateClicked)
+        else if (!stateClicked) // chưa cây nào được chọn 
         {
             stateClicked = true;
             var listAnimalsCanMove = new List<Animal>();
@@ -213,23 +234,24 @@ public class Tree : MonoBehaviour
             targetPosition.x -= 1;
             position.x = anchorSpawnAninmalRight.position.x;
         }
-       
+
         yield return new WaitForSecondsRealtime(1.5f);
 
         targetPosition = Camera.main.ViewportToWorldPoint(targetPosition);
         targetPosition.z = 0;
         foreach (var animal in animalsCopy)
         {
-            animal.Jump(targetPosition, 0.3f,this);
+            animal.Jump(targetPosition, 0.3f, this);
         }
+
         yield return new WaitForSecondsRealtime(0.5f);
         foreach (var animal in animalsCopy)
         {
             animal.gameObject.SetActive(false);
         }
-        
+    
         animalsCopy.Clear();
-        
+        GameManager.Instance.StartCheckWinGame();
     }
 
     private bool CheckEnoghAnimalOnTree()
@@ -238,6 +260,7 @@ public class Tree : MonoBehaviour
         {
             return false;
         }
+
         var animalHead = animalsCopy[0].name;
         foreach (var animal in animalsCopy)
         {
@@ -285,13 +308,13 @@ public class Tree : MonoBehaviour
     }
 
     private Coroutine coroutineShakeTree = null;
+
     public void ShakeTree(float duration = 0.3f, float angle = 0.5f)
     {
-        if (coroutineShakeTree== null)
+        if (coroutineShakeTree == null)
         {
             coroutineShakeTree = StartCoroutine(Shake(duration, angle));
         }
-      
     }
 
     private IEnumerator Shake(float duration, float angle)
@@ -300,12 +323,18 @@ public class Tree : MonoBehaviour
         float elapsed = 0f;
         while (elapsed < duration)
         {
-            float shakeAngle = Mathf.Sin(Time.time * 50f) * angle;  // Dao động qua lại
+            float shakeAngle = Mathf.Sin(Time.time * 50f) * angle; // Dao động qua lại
             transform.rotation = transform.rotation * Quaternion.Euler(0, 0, shakeAngle);
             elapsed += Time.deltaTime;
             yield return null;
         }
-        transform.rotation = origin; 
+
+        transform.rotation = origin;
         coroutineShakeTree = null;
+    }
+
+    public void CloseTree()
+    {
+        StartEffectToClose();
     }
 }

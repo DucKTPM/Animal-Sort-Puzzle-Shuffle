@@ -6,7 +6,9 @@ using UnityEngine;
 public class GenerateTree : MonoBehaviour
 {
     [SerializeField] private List<Tree> treeList = new List<Tree>();
-
+    [SerializeField] private List<Tree> listTreeSpawned = new List<Tree>();
+    [SerializeField] private GameManager gameManager;
+    public List<Tree> ListTreeSpawned => listTreeSpawned;
     public void StartGenerateTree(LevelData levelData)
     {
         StartCoroutine(IeGenerateTree(levelData));
@@ -46,6 +48,7 @@ public class GenerateTree : MonoBehaviour
                     midlePositonCamera.z = 0;
                     var obj = Instantiate(treeInstance, midlePositonCamera, Quaternion.identity);
                     obj.StartSpawnAnimalOnTree(idAnimals);
+                    listTreeSpawned.Add(obj);
                     leftRight = !leftRight;
                     count++;
                 }
@@ -55,6 +58,7 @@ public class GenerateTree : MonoBehaviour
                     midlePositonCamera.z = 0;
                     var obj = Instantiate(treeInstance, midlePositonCamera, Quaternion.identity);
                     obj.StartSpawnAnimalOnTree(idAnimals);
+                    listTreeSpawned.Add(obj);
                     leftRight = !leftRight;
                     count++;
                 }
@@ -74,6 +78,7 @@ public class GenerateTree : MonoBehaviour
                     midlePositonCamera.z = 0;
                     var obj = Instantiate(treeInstance, midlePositonCamera, Quaternion.identity);
                     obj.StartSpawnAnimalOnTree(idAnimals);
+                    listTreeSpawned.Add(obj);
                     leftRight = !leftRight;
                     count++;
                 }
@@ -83,6 +88,8 @@ public class GenerateTree : MonoBehaviour
                     midlePositonCamera.z = 0;
                     var obj = Instantiate(treeInstance, midlePositonCamera, Quaternion.identity);
                     obj.StartSpawnAnimalOnTree(idAnimals);
+                    listTreeSpawned.Add(obj);
+               
                     leftRight = !leftRight;
                     count++;
                 }
@@ -95,7 +102,14 @@ public class GenerateTree : MonoBehaviour
                 }
             }
         }
-
         yield return null;
+    }
+
+    public void CloseTreeSpawned()
+    {
+        foreach (var tree in listTreeSpawned)
+        {
+            tree.CloseTree();
+        }
     }
 }
