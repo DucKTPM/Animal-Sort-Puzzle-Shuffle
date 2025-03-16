@@ -204,6 +204,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   generateTree: {fileID: 753549444}
   tree: {fileID: 1482358594780742971, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
+  animalsClicked: []
 --- !u!114 &753549444
 MonoBehaviour:
   m_ObjectHideFlags: 0

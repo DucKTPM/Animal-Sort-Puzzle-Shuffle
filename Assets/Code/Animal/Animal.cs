@@ -6,6 +6,7 @@ public class Animal : MonoBehaviour
 {
   [SerializeField] private string nameAnimal;
   [SerializeField] private SpriteRenderer animalRenderer;
+  
   public string getNameAnimal()
   {
     return this.nameAnimal;
@@ -26,35 +27,36 @@ public class Animal : MonoBehaviour
     animalRenderer.color = Color.white;
   }
 
-  public void Jump(Vector3 endPosition)
+  public void Jump(Vector3 endPosition, float h,Tree anchorTree)
   {
-    StartCoroutine(IeJump(transform.position, endPosition));
+    gameObject.transform.SetParent(anchorTree.transform);
+    StartCoroutine(IeJump(transform.position, endPosition,h, anchorTree));
   }
 
-  private IEnumerator IeJump(Vector3 transformPosition, Vector3 endPosition)
+  private IEnumerator IeJump(Vector3 startPosition, Vector3 endPosition, float heightMultiplier,Tree anchorTree )
   {
-    Vector3 startPosition = transform.position;
     float elapsedTime = 0f;
-    float distance = Vector3.Distance(startPosition, endPosition);
-    float height = distance * 0.1f;
-    float arcOffset = distance * 0.3f;
-    float time = 1f;
-    while (elapsedTime < time)
+    float duration = 1f; 
+    float maxHeight = Vector3.Distance(startPosition, endPosition) * heightMultiplier; // Độ cao tối đa
+    
+    while (elapsedTime < duration)
     {
       elapsedTime += Time.deltaTime;
-      float t = elapsedTime / time;
+      float t = elapsedTime / duration; 
+        
 
-      // Di chuyển theo X-Z tuyến tính
       Vector3 position = Vector3.Lerp(startPosition, endPosition, t);
 
-      // Công thức vòng cung
-      position.y += height * (1 - Mathf.Cos(Mathf.PI * t));  // Hiệu ứng nhảy lên
-      position.x += arcOffset * Mathf.Sin(Mathf.PI * t); // Tạo vòng cung nhẹ ngang
+      // Tính toán vị trí Y theo quỹ đạo parabol
+      position.y += maxHeight - 4 * maxHeight * (t - 0.5f) * (t - 0.5f); 
 
       transform.position = position;
       yield return null;
     }
-
-    transform.position = endPosition; 
+    
+    transform.position = endPosition; // Đảm bảo đặt đúng vị trí kết thúc
+    anchorTree.ShakeTree();
   }
+
+
 }

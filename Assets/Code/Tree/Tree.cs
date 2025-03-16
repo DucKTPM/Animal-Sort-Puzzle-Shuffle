@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [System.Serializable]
 public class Tree : MonoBehaviour
@@ -23,7 +24,7 @@ public class Tree : MonoBehaviour
     //   // StartSpawnAnimalOnTree(arrayIdAnimals);
     //    //StartEffectToAppear();
     // }
-
+    
     public void StartSpawnAnimalOnTree(int[] idAnimals)
     {
         StartCoroutine(IeStartSpawnAnimal(idAnimals));
@@ -53,13 +54,15 @@ public class Tree : MonoBehaviour
             {
                 var obj = Instantiate(animals[idAnimals[i]], position, Quaternion.identity, parent: transform);
                 animalsCopy.Add(obj);
-                position.x += 0.375f;
+                position.x += 0.4f;
             }
 
             if (viewPostion.x > 0.5f)
             {
-                position.x -= 0.375f;
+                position.x -= 0.4f;
+                
                 var obj = Instantiate(animals[idAnimals[i]], position, Quaternion.identity, parent: transform);
+
                 animalsCopy.Add(obj);
             }
 
@@ -70,12 +73,6 @@ public class Tree : MonoBehaviour
         StartEffectToAppear();
         yield return null;
     }
-
-    // public void SetArrayIdAnimals(int[] arrayIdAnimals)
-    // {
-    //     this.arrayIdAnimals = arrayIdAnimals;
-    //
-    // }
     public void SetSlot(int slot)
     {
         this.slot = slot;
@@ -114,9 +111,9 @@ public class Tree : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (GameView.Instance.StateClickedTree == true)
+        if (GameView.Instance.StateClickedTree == true) // nếu có cây được chọn
         {
-            if (GameView.Instance.GetTree() == this)
+            if (GameView.Instance.GetTree() == this) // kiểm tra cây được chọn phải là cây này
             {
                 GameView.Instance.AnimalsCancelClicked();
             }
@@ -133,9 +130,9 @@ public class Tree : MonoBehaviour
                         {
                             position.x -= 0.375f;
                         }
-
+                
                         animalsCopy.Add(animal[i]);
-                        animal[i].Jump(position);
+                        animal[i].Jump(position,0.5f,this);
                         if (viewPostion.x <= 0.5f)
                         {
                             position.x += 0.375f;
@@ -143,11 +140,12 @@ public class Tree : MonoBehaviour
 
                         GameView.Instance.RemoveAnimalOnTreeClicked(animal[i]);
                     }
+                  //  ShakeTree();
+           
                 }
             }
             else
             {
-                Debug.Log("Cant move");
                 var viewPostion = Camera.main.WorldToViewportPoint(transform.position);
                 var animal = GameView.Instance.GetAnimalsClicked();
                 for (int i = 0; i < animal.Count; i++)
@@ -158,21 +156,21 @@ public class Tree : MonoBehaviour
                     }
 
                     animalsCopy.Add(animal[i]);
-                    animal[i].Jump(position);
+                    animal[i].Jump(position,0.5f,this);
                     if (viewPostion.x <= 0.5f)
                     {
                         position.x += 0.375f;
                     }
-
                     GameView.Instance.RemoveAnimalOnTreeClicked(animal[i]);
+                    
                 }
+   
                 //    GameView.Instance.AnimalsCancelClicked();
             }
 
             if (CheckEnoghAnimalOnTree())
             {
-                Debug.Log("Enough");
-                JumpOut();
+                StartCoroutine(JumpOut());
             }
 
             GameView.Instance.AnimalsCancelClicked();
@@ -202,12 +200,44 @@ public class Tree : MonoBehaviour
         }
     }
 
-    private void JumpOut()
+    private IEnumerator JumpOut()
     {
+        var targetPosition = Camera.main.WorldToViewportPoint(transform.position);
+        if (targetPosition.x > 0.5f)
+        {
+            targetPosition.x += 1;
+            position.x = anchorSpawnAninmalLeft.position.x;
+        }
+        else
+        {
+            targetPosition.x -= 1;
+            position.x = anchorSpawnAninmalRight.position.x;
+        }
+       
+        yield return new WaitForSecondsRealtime(1.5f);
+
+        targetPosition = Camera.main.ViewportToWorldPoint(targetPosition);
+        targetPosition.z = 0;
+        foreach (var animal in animalsCopy)
+        {
+            animal.Jump(targetPosition, 0.3f,this);
+        }
+        yield return new WaitForSecondsRealtime(0.5f);
+        foreach (var animal in animalsCopy)
+        {
+            animal.gameObject.SetActive(false);
+        }
+        
+        animalsCopy.Clear();
+        
     }
 
     private bool CheckEnoghAnimalOnTree()
     {
+        if (animalsCopy.Count != slot)
+        {
+            return false;
+        }
         var animalHead = animalsCopy[0].name;
         foreach (var animal in animalsCopy)
         {
@@ -252,5 +282,30 @@ public class Tree : MonoBehaviour
 
         animalsCopy.Remove(animal);
         //  animal.gameObject.SetActive(false);
+    }
+
+    private Coroutine coroutineShakeTree = null;
+    public void ShakeTree(float duration = 0.3f, float angle = 0.5f)
+    {
+        if (coroutineShakeTree== null)
+        {
+            coroutineShakeTree = StartCoroutine(Shake(duration, angle));
+        }
+      
+    }
+
+    private IEnumerator Shake(float duration, float angle)
+    {
+        var origin = transform.rotation;
+        float elapsed = 0f;
+        while (elapsed < duration)
+        {
+            float shakeAngle = Mathf.Sin(Time.time * 50f) * angle;  // Dao động qua lại
+            transform.rotation = transform.rotation * Quaternion.Euler(0, 0, shakeAngle);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        transform.rotation = origin; 
+        coroutineShakeTree = null;
     }
 }
