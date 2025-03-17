@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     {
         stateGame = true;
         LevelData levelData = levelDataManager.ReadLevelData();
+        Debug.Log(levelData.extralsConfig.Length);
         gameView.StartGenerateMapLevel(levelData);
         StartCoroutine(StartWaitWinGame());
     }
@@ -54,8 +55,6 @@ public class GameManager : MonoBehaviour
     {
         foreach (var tree in listTreeSpawn)
         {
-
-            Debug.Log(tree.AnimalsOnTree.Count);
             if (tree.AnimalsOnTree.Count != 0)
             {
                 return false;

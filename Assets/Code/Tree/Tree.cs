@@ -14,15 +14,18 @@ public class Tree : MonoBehaviour
     [SerializeField] private GameObject treeView;
     [SerializeField] private BoxCollider2D boxCollider2D;
     [SerializeField] private Rigidbody2D rigidbody2D;
-    [SerializeField] private List<Animal> animalsCopy = new List<Animal>();
+    [SerializeField] private List<Animal> listAnimalOnTree = new List<Animal>();
     [SerializeField] private int slot;
-    public List<Animal> AnimalsOnTree=> animalsCopy;    
+    [SerializeField] private float space = 0.5f;
+    public List<Animal> AnimalsOnTree=> listAnimalOnTree;    
+    private bool stateClicked = false;
 
     private int currentAnimal = 0;
 
     public void StartSpawnAnimalOnTree(int[] idAnimals)
     {
         StartCoroutine(IeStartSpawnAnimal(idAnimals));
+        stateClicked = false;
     }
 
     Vector3 position = new Vector3();
@@ -30,7 +33,6 @@ public class Tree : MonoBehaviour
     private IEnumerator IeStartSpawnAnimal(int[] idAnimals)
     {
         var viewPostion = Camera.main.WorldToViewportPoint(transform.position);
-        //  Vector3 position = new Vector3();
         if (viewPostion.x <= 0.5f)
         {
             position = anchorSpawnAninmalLeft.position;
@@ -48,17 +50,14 @@ public class Tree : MonoBehaviour
             if (viewPostion.x <= 0.5f)
             {
                 var obj = Instantiate(animals[idAnimals[i]], position, Quaternion.identity, parent: transform);
-                animalsCopy.Add(obj);
-                position.x += 0.4f;
-            }
-
+                listAnimalOnTree.Add(obj);
+                position.x += space;
+            }else
             if (viewPostion.x > 0.5f)
             {
-                position.x -= 0.4f;
-
                 var obj = Instantiate(animals[idAnimals[i]], position, Quaternion.identity, parent: transform);
-
-                animalsCopy.Add(obj);
+                position.x -= space;
+                listAnimalOnTree.Add(obj);
             }
 
             currentAnimal++;
@@ -80,11 +79,11 @@ public class Tree : MonoBehaviour
         var viewPostion = Camera.main.WorldToViewportPoint(destination);
         if (viewPostion.x <= 0.5f)
         {
-            viewPostion.x -= 0.5f;
+            viewPostion.x -= space;
         }
         else if (viewPostion.x > 0.5f)
         {
-            viewPostion.x += 0.5f;
+            viewPostion.x += space;
         }
 
         transform.position = Camera.main.ViewportToWorldPoint(viewPostion);
@@ -96,11 +95,11 @@ public class Tree : MonoBehaviour
         var viewPostion = Camera.main.WorldToViewportPoint(destination);
         if (viewPostion.x <= 0.5f)
         {
-            viewPostion.x -= 0.5f;
+            viewPostion.x -= space;
         }
-        else if (viewPostion.x > 0.5f)
+        else if (viewPostion.x > space)
         {
-            viewPostion.x += 0.5f;
+            viewPostion.x += space;
         }
         destination = Camera.main.ViewportToWorldPoint(viewPostion);
         StartCoroutine(IeStartEffectToClose(destination));
@@ -129,7 +128,55 @@ public class Tree : MonoBehaviour
         transform.position = destination;
     }
 
-    private bool stateClicked = false;
+    
+    private void MoveAnimalsTreeEmptys()
+    {
+            var checkSideViewPos = Camera.main.WorldToViewportPoint(transform.position);
+            var listAnimalsMove = GameView.Instance.GetAnimalsClicked();
+            for (int i = 0; i <listAnimalsMove.Count; i++)
+            {
+                AnimalsOnTree.Add(listAnimalsMove[i]);
+                listAnimalsMove[i].Jump(position,0.5f,this);
+                if (checkSideViewPos.x <= 0.5f)
+                {
+                    position.x += space;
+                }
+                else
+                {
+                    position.x -= space;
+                }
+                GameView.Instance.RemoveAnimalOnTreeClicked(listAnimalsMove[i]);
+            }
+
+    }
+    private void MoveAnimals()
+    {
+        var checkSideViewPos = Camera.main.WorldToViewportPoint(transform.position);
+        var listAnimalsMove = GameView.Instance.GetAnimalsClicked();
+
+        // Kiểm tra danh sách rỗng hoặc số lượng slot không hợp lệ
+        int countToMove = Mathf.Min(slot - listAnimalOnTree.Count, listAnimalsMove.Count);
+        if (countToMove <= 0) return;
+
+        for (int i = 0; i < countToMove; i++)
+        {
+            AnimalsOnTree.Add(listAnimalsMove[i]);
+            listAnimalsMove[i].Jump(position, 0.5f, this);
+            Vector3 newPosition = position;
+            if (checkSideViewPos.x <= 0.5f)
+            {
+                newPosition.x += space;
+            }
+            else
+            {
+                newPosition.x -= space;
+            }
+
+            position = newPosition;
+
+            GameView.Instance.RemoveAnimalOnTreeClicked(listAnimalsMove[i]);
+        }
+    }
 
     private void OnMouseDown()
     {
@@ -139,74 +186,35 @@ public class Tree : MonoBehaviour
             {
                 GameView.Instance.AnimalsCancelClicked();
             }
-            else if (animalsCopy.Count > 0)// nếu cây không đã có  animal
+            else if (listAnimalOnTree.Count > 0)// nếu cây  đã có  animal
             {
                 if (!CheckSlotFull() && CheckAnimalsSameAnimalOnTree(GameView.Instance.GetAnimalClicked()))
                 {
-                    Debug.Log("Cant move");
-                    var viewPostion = Camera.main.WorldToViewportPoint(transform.position);
-                    var animal = GameView.Instance.GetAnimalsClicked();
-                    for (int i = 0; i <= slot - animalsCopy.Count; i++)
-                    {
-                        if (viewPostion.x > 0.5f)
-                        {
-                            position.x -= 0.375f;
-                        }
-
-                        animalsCopy.Add(animal[i]);
-                        animal[i].Jump(position, 0.5f, this);
-                        if (viewPostion.x <= 0.5f)
-                        {
-                            position.x += 0.375f;
-                        }
-
-                        GameView.Instance.RemoveAnimalOnTreeClicked(animal[i]);
-                    }
-                    //  ShakeTree();
+                  MoveAnimals();
                 }
             }
-            else // nếu không
+            else // nếu không có cây không có animal
             {
-                var viewPostion = Camera.main.WorldToViewportPoint(transform.position);
-                var animal = GameView.Instance.GetAnimalsClicked();
-                for (int i = 0; i < animal.Count; i++)
-                {
-                    if (viewPostion.x > 0.5f)
-                    {
-                        position.x -= 0.375f;
-                    }
-
-                    animalsCopy.Add(animal[i]);
-                    animal[i].Jump(position, 0.5f, this);
-                    if (viewPostion.x <= 0.5f)
-                    {
-                        position.x += 0.375f;
-                    }
-
-                    GameView.Instance.RemoveAnimalOnTreeClicked(animal[i]);
-                }
-
-                //    GameView.Instance.AnimalsCancelClicked();
+                MoveAnimalsTreeEmptys();
             }
-
+            GameView.Instance.AnimalsCancelClicked();
             if (CheckEnoghAnimalOnTree())
             {
                 StartCoroutine(JumpOut());
             }
-
             GameView.Instance.AnimalsCancelClicked();
         }
-        else if (!stateClicked) // chưa cây nào được chọn 
+        else if (GameView.Instance.StateClickedTree == false && listAnimalOnTree.Count !=0) // chưa cây nào được chọn và cây đấy phải có chim
         {
-            stateClicked = true;
+           GameView.Instance.setStateClickedTree(true);
             var listAnimalsCanMove = new List<Animal>();
-            var nameTopInline = animalsCopy[animalsCopy.Count - 1].getNameAnimal();
+            var nameTopInline = listAnimalOnTree[listAnimalOnTree.Count - 1].getNameAnimal();
 
-            for (int i = animalsCopy.Count - 1; i >= 0; i--)
+            for (int i = listAnimalOnTree.Count - 1; i >= 0; i--)
             {
-                if (nameTopInline == animalsCopy[i].getNameAnimal())
+                if (nameTopInline == listAnimalOnTree[i].getNameAnimal())
                 {
-                    listAnimalsCanMove.Add(animalsCopy[i]);
+                    listAnimalsCanMove.Add(listAnimalOnTree[i]);
                 }
                 else break;
             }
@@ -217,7 +225,6 @@ public class Tree : MonoBehaviour
         else
         {
             GameView.Instance.AnimalsCancelClicked();
-            stateClicked = false;
         }
     }
 
@@ -239,30 +246,30 @@ public class Tree : MonoBehaviour
 
         targetPosition = Camera.main.ViewportToWorldPoint(targetPosition);
         targetPosition.z = 0;
-        foreach (var animal in animalsCopy)
+        foreach (var animal in listAnimalOnTree)
         {
             animal.Jump(targetPosition, 0.3f, this);
         }
 
         yield return new WaitForSecondsRealtime(0.5f);
-        foreach (var animal in animalsCopy)
+        foreach (var animal in listAnimalOnTree)
         {
             animal.gameObject.SetActive(false);
         }
     
-        animalsCopy.Clear();
+        listAnimalOnTree.Clear();
         GameManager.Instance.StartCheckWinGame();
     }
 
     private bool CheckEnoghAnimalOnTree()
     {
-        if (animalsCopy.Count != slot)
+        if (listAnimalOnTree.Count != slot)
         {
             return false;
         }
 
-        var animalHead = animalsCopy[0].name;
-        foreach (var animal in animalsCopy)
+        var animalHead = listAnimalOnTree[0].name;
+        foreach (var animal in listAnimalOnTree)
         {
             if (animal.name != animalHead)
             {
@@ -275,14 +282,13 @@ public class Tree : MonoBehaviour
 
     private bool CheckSlotFull()
     {
-        Debug.Log(animalsCopy.Count == slot);
-        return animalsCopy.Count == slot;
+        return listAnimalOnTree.Count == slot;
     }
 
 
     private bool CheckAnimalsSameAnimalOnTree(Animal animal)
     {
-        if (animalsCopy[animalsCopy.Count - 1].name == animal.name)
+        if (listAnimalOnTree[listAnimalOnTree.Count - 1].name == animal.name)
         {
             return true;
         }
@@ -295,16 +301,15 @@ public class Tree : MonoBehaviour
         var viewPostion = Camera.main.WorldToViewportPoint(transform.position);
         if (viewPostion.x > 0.5f)
         {
-            position.x += 0.375f;
+            position.x +=space;
         }
 
         if (viewPostion.x <= 0.5f)
         {
-            position.x -= 0.375f;
+            position.x -= space;
         }
 
-        animalsCopy.Remove(animal);
-        //  animal.gameObject.SetActive(false);
+        listAnimalOnTree.Remove(animal);
     }
 
     private Coroutine coroutineShakeTree = null;

@@ -10,7 +10,7 @@ public class LevelDataManager : MonoBehaviour
 {
     private int currentLevelIndex
     {
-        get=>PlayerPrefs.GetInt("currentLevelIndex",2);
+        get=>PlayerPrefs.GetInt("currentLevelIndex",11);
         set{PlayerPrefs.SetInt("currentLevelIndex",value);}
         
     }
@@ -63,39 +63,25 @@ public class StandConfig
 }
 
 [Serializable]
-public class ExtralConfig
+public class ExtralsConfig
 {
     public int type;
-    public Position positionData;
+    public PositionData positionData;
     public int[] extralValues;
+}
+[Serializable]
+public class PositionData
+{
+    public int posType;
+    public int indextStand;
+    public int indexBird;
 }
 
 [Serializable]
 public class LevelData
 {
     public StandConfig[] standConfig;
-    public ExtralConfig[] extralConfig;
+    public ExtralsConfig[] extralsConfig;
 }
 
-// [System.Serializable]
-//
-// public class StandData
-// {
-//     public int type;
-//     public int numSlot;
-// }
-//
-// [System.Serializable]
-// public class StandConfig
-// {
-//     public int[] idBirds;
-//     public StandData standData;
-//     public int side;
-//     
-// }
-//
-// [System.Serializable]
-// public class RootConfig
-// {
-//     public StandConfig[] standConfig;
-// }
+

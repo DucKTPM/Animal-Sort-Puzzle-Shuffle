@@ -50,17 +50,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animals:
+  - {fileID: 4873044086198518127, guid: 095ee7255e2834e4c9426db21b3cb3e0, type: 3}
+  - {fileID: -8921016522947204177, guid: b5a5d4fe0ea181d4596c7a9e7257bbce, type: 3}
   - {fileID: 1642584250214504617, guid: 995896aedcfcb7e4faa09bbccefa90e6, type: 3}
   - {fileID: 7991726375753472338, guid: 71541a34673b4ab428516fed029a58b8, type: 3}
-  - {fileID: 6016020228374427290, guid: 9e8603c8a0a911449967d99ad02a8369, type: 3}
-  - {fileID: 6016020228374427290, guid: 9e8603c8a0a911449967d99ad02a8369, type: 3}
+  - {fileID: 2781153813948363707, guid: cde208563e3f7344faba2009495fd05d, type: 3}
+  - {fileID: 969380688768625417, guid: ebf04d65bd54bc2488d278b0a3efc101, type: 3}
+  - {fileID: -3332961166696669473, guid: c2e633e5c43958f45a60c8bd9971f528, type: 3}
   anchorSpawnAninmalLeft: {fileID: 7444120401334259836}
   anchorSpawnAninmalRight: {fileID: 1313837008692278120}
   treeView: {fileID: 8548050694398877320}
   boxCollider2D: {fileID: 3936711937402589082}
   rigidbody2D: {fileID: -2380339195729947077}
-  animalsCopy: []
+  listAnimalOnTree: []
   slot: 4
+  space: 0.5
 --- !u!61 &3936711937402589082
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -189,7 +193,7 @@ Transform:
   m_GameObject: {fileID: 7486075866321556091}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1, y: -0.044, z: 0}
+  m_LocalPosition: {x: 0.35, y: -0.044, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

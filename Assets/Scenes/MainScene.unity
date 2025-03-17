@@ -222,6 +222,9 @@ MonoBehaviour:
   - {fileID: 4764305275180052828, guid: da4f873b70abd1043a39878b0758da39, type: 3}
   listTreeSpawned: []
   gameManager: {fileID: 0}
+  listTypeObstacles:
+  - {fileID: 1751294574676973663, guid: 56d6e53ebc139f54ba0ff20b409c4598, type: 3}
+  - {fileID: 1751294574676973663, guid: 56d6e53ebc139f54ba0ff20b409c4598, type: 3}
 --- !u!1 &757539131
 GameObject:
   m_ObjectHideFlags: 0

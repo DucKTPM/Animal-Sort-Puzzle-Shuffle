@@ -17,6 +17,10 @@ public class GameView : MonoBehaviour
         Instance = this;
     }
 
+    public void setStateClickedTree(bool state)
+    {
+        stateClickedTree = state;
+    }
     public void RemoveAnimalOnTreeClicked(Animal animal)
     {
         tree.RemoveAnimal(animal);
@@ -69,13 +73,13 @@ public class GameView : MonoBehaviour
     {
         if (animalsClicked != null)
         {
-            foreach (var VARIABLE in animalsClicked)
+            foreach (var animal in animalsClicked)
             {
-                VARIABLE.RemoveClickedAnimal();
+                animal.RemoveClickedAnimal();
             }
+            animalsClicked.Clear();
         }
         tree = null;
-        animalsClicked.Clear();
         stateClickedTree = false;
     }
     public void StartGenerateMapLevel(LevelData levelData)

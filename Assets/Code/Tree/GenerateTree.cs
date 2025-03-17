@@ -2,13 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GenerateTree : MonoBehaviour
 {
     [SerializeField] private List<Tree> treeList = new List<Tree>();
     [SerializeField] private List<Tree> listTreeSpawned = new List<Tree>();
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private List<GameObject> listTypeObstacles = new List<GameObject>();
+    public List<GameObject> ListTypeObstacles => listTypeObstacles;
     public List<Tree> ListTreeSpawned => listTreeSpawned;
+
     public void StartGenerateTree(LevelData levelData)
     {
         StartCoroutine(IeGenerateTree(levelData));
@@ -89,7 +93,7 @@ public class GenerateTree : MonoBehaviour
                     var obj = Instantiate(treeInstance, midlePositonCamera, Quaternion.identity);
                     obj.StartSpawnAnimalOnTree(idAnimals);
                     listTreeSpawned.Add(obj);
-               
+
                     leftRight = !leftRight;
                     count++;
                 }
@@ -102,7 +106,34 @@ public class GenerateTree : MonoBehaviour
                 }
             }
         }
+
+        SpawnObstace(levelData.extralsConfig);
         yield return null;
+    }
+
+    private void SpawnObstace(ExtralsConfig[] levelDataExtralConfig)
+    {
+
+        if (levelDataExtralConfig == null)
+        {
+            Debug.LogError("LevelDataExtralConfig is null");
+        }
+        for (int j = 0; j < levelDataExtralConfig.Length; j++)
+        {
+            Debug.Log("abc");
+            int type = levelDataExtralConfig[j].type;
+            int indexStand = levelDataExtralConfig[j].positionData.indextStand;
+            int indexBird = levelDataExtralConfig[j].positionData.indexBird;
+             int extralValues = levelDataExtralConfig[j].extralValues[0]; // thoi gian 
+            if (type == 1)
+            {
+                var animal = listTreeSpawned[indexStand].AnimalsOnTree[indexBird];
+                var obj = Instantiate(listTypeObstacles[0],animal.transform.position,Quaternion.identity);
+                obj.transform.parent = animal.transform;
+            }
+        }
+           
+        
     }
 
     public void CloseTreeSpawned()
