@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     {
         stateGame = true;
         LevelData levelData = levelDataManager.ReadLevelData();
-        Debug.Log(levelData.extralsConfig.Length);
+  //      Debug.Log(levelData.extralsConfig.Length);
         gameView.StartGenerateMapLevel(levelData);
         StartCoroutine(StartWaitWinGame());
     }

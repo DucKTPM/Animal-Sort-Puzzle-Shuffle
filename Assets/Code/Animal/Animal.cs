@@ -58,5 +58,9 @@ public class Animal : MonoBehaviour
     anchorTree.ShakeTree();
   }
 
+  public void Sleep()
+  {
+    Click();
+  }
 
 }

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f9e61435c61584baf27cc72d4f7673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameAnimal: Elephant
+  nameAnimal: 2
   animalRenderer: {fileID: 5206952054240770564}
 --- !u!1001 &4016331744559128442
 PrefabInstance:

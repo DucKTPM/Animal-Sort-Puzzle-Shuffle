@@ -1271,7 +1271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f9e61435c61584baf27cc72d4f7673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameAnimal: Panda
+  nameAnimal: 5
   animalRenderer: {fileID: 3764721323810450285}
 --- !u!1 &6267202851226236678
 GameObject:

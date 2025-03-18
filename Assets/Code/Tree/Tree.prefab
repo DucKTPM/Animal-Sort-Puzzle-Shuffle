@@ -51,12 +51,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animals:
   - {fileID: 4873044086198518127, guid: 095ee7255e2834e4c9426db21b3cb3e0, type: 3}
-  - {fileID: -8921016522947204177, guid: b5a5d4fe0ea181d4596c7a9e7257bbce, type: 3}
-  - {fileID: 1642584250214504617, guid: 995896aedcfcb7e4faa09bbccefa90e6, type: 3}
   - {fileID: 7991726375753472338, guid: 71541a34673b4ab428516fed029a58b8, type: 3}
   - {fileID: 2781153813948363707, guid: cde208563e3f7344faba2009495fd05d, type: 3}
   - {fileID: 969380688768625417, guid: ebf04d65bd54bc2488d278b0a3efc101, type: 3}
-  - {fileID: -3332961166696669473, guid: c2e633e5c43958f45a60c8bd9971f528, type: 3}
+  - {fileID: 1642584250214504617, guid: 995896aedcfcb7e4faa09bbccefa90e6, type: 3}
+  - {fileID: -8921016522947204177, guid: b5a5d4fe0ea181d4596c7a9e7257bbce, type: 3}
+  - {fileID: -8921016522947204177, guid: b5a5d4fe0ea181d4596c7a9e7257bbce, type: 3}
+  - {fileID: -8921016522947204177, guid: b5a5d4fe0ea181d4596c7a9e7257bbce, type: 3}
+  - {fileID: -8921016522947204177, guid: b5a5d4fe0ea181d4596c7a9e7257bbce, type: 3}
   anchorSpawnAninmalLeft: {fileID: 7444120401334259836}
   anchorSpawnAninmalRight: {fileID: 1313837008692278120}
   treeView: {fileID: 8548050694398877320}

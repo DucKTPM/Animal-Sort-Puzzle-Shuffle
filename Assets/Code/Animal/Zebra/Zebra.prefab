@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f9e61435c61584baf27cc72d4f7673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameAnimal: Zebra
+  nameAnimal: 0
   animalRenderer: {fileID: 7719529562228220642}
 --- !u!1001 &4562613279023467447
 PrefabInstance:

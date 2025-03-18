@@ -224,7 +224,13 @@ MonoBehaviour:
   gameManager: {fileID: 0}
   listTypeObstacles:
   - {fileID: 1751294574676973663, guid: 56d6e53ebc139f54ba0ff20b409c4598, type: 3}
-  - {fileID: 1751294574676973663, guid: 56d6e53ebc139f54ba0ff20b409c4598, type: 3}
+  - {fileID: 264085856894689522, guid: 78bfd1cec3444ac428943c31514904f4, type: 3}
+  - {fileID: 5853372736719068623, guid: 65ada1f6bbb5fd94faacb8cdd414f6c3, type: 3}
+  - {fileID: 8137499889839261929, guid: 5f6f053fa84e71d45903624334d0e7f8, type: 3}
+  - {fileID: 1974875323879962352, guid: adafce5592fd3cc42a18f14738029450, type: 3}
+  - {fileID: 6277765060639104935, guid: 1f11bbd3d4b0e4a469135f6a752628ab, type: 3}
+  - {fileID: 6830097093989232038, guid: 516eff2cc16b33d448104c3c735378b4, type: 3}
+  listItemObstacles: []
 --- !u!1 &757539131
 GameObject:
   m_ObjectHideFlags: 0
