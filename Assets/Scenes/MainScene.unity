@@ -221,7 +221,7 @@ MonoBehaviour:
   - {fileID: 1482358594780742971, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
   - {fileID: 4764305275180052828, guid: da4f873b70abd1043a39878b0758da39, type: 3}
   listTreeSpawned: []
-  gameManager: {fileID: 0}
+  gameManager: {fileID: 757539133}
   listTypeObstacles:
   - {fileID: 1751294574676973663, guid: 56d6e53ebc139f54ba0ff20b409c4598, type: 3}
   - {fileID: 264085856894689522, guid: 78bfd1cec3444ac428943c31514904f4, type: 3}
@@ -231,6 +231,11 @@ MonoBehaviour:
   - {fileID: 6277765060639104935, guid: 1f11bbd3d4b0e4a469135f6a752628ab, type: 3}
   - {fileID: 6830097093989232038, guid: 516eff2cc16b33d448104c3c735378b4, type: 3}
   listItemObstacles: []
+  bomb: {fileID: 4792227819809780523, guid: 56d6e53ebc139f54ba0ff20b409c4598, type: 3}
+  key: {fileID: 8183565645158235464, guid: 78bfd1cec3444ac428943c31514904f4, type: 3}
+  cage: {fileID: -7333339521377277338, guid: 65ada1f6bbb5fd94faacb8cdd414f6c3, type: 3}
+  egg: {fileID: 2778775858142448893, guid: adafce5592fd3cc42a18f14738029450, type: 3}
+  hammer: {fileID: -1269536016913307415, guid: 5f6f053fa84e71d45903624334d0e7f8, type: 3}
 --- !u!1 &757539131
 GameObject:
   m_ObjectHideFlags: 0
@@ -472,7 +477,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -100
   m_Sprite: {fileID: 21300000, guid: 82e3359d38472e8488e6ce00e11e4afd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -662,7 +667,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!1 &2064771859
 GameObject:

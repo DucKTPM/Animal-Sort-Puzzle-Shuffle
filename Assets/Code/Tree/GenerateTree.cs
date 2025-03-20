@@ -11,6 +11,12 @@ public class GenerateTree : MonoBehaviour
     [SerializeField] private GameManager gameManager;
     [SerializeField] private List<GameObject> listTypeObstacles = new List<GameObject>();
     [SerializeField] private List<GameObject> listItemObstacles = new List<GameObject>();
+    [SerializeField] private Bomb bomb;
+    [SerializeField] private KeyUnlock key;
+    [SerializeField] private Cage cage;
+    [SerializeField] private Egg egg;
+    [SerializeField] private Hammer hammer;
+
     public List<GameObject> ListTypeObstacles => listTypeObstacles;
     public List<Tree> ListTreeSpawned => listTreeSpawned;
 
@@ -30,6 +36,7 @@ public class GenerateTree : MonoBehaviour
             slot = standConfig.standData.numSlot;
             type = standConfig.standData.type;
         }
+        slot = Mathf.Max(slot, 4);
 
         Tree treeInstance = new Tree();
         treeInstance = treeList[type];
@@ -127,48 +134,60 @@ public class GenerateTree : MonoBehaviour
             int type = levelDataExtralConfig[j].type;
             int indexStand = levelDataExtralConfig[j].positionData.indexStand;
             int indexBird = levelDataExtralConfig[j].positionData.indexBird;
-             int extralValues = levelDataExtralConfig[j].extralValues[0]; // thoi gian , chim cam chia khoa
+             int extralValues = levelDataExtralConfig[j].extralValues[j]; // thoi gian , chim cam chia khoa
  
             if (type == 1)
             {
                 var animal = listTreeSpawned[indexStand].AnimalsOnTree[listTreeSpawned[indexStand].AnimalsOnTree.Count-indexBird-1];
-                var obj = Instantiate(listTypeObstacles[0],animal.transform.position,Quaternion.identity);
+                var obj = Instantiate(this.bomb,animal.transform.position,Quaternion.identity);
                 obj.transform.parent = animal.transform;
+                obj.SetValueBomb(extralValues);
+                animal.SetBombInAnimal(obj);
+                GameManager.Instance.SetValueBomb(extralValues);
+                GameManager.Instance.SetBomb(obj);
+                GameManager.Instance.SetTypeEffectItem(type);
             }
             else if (type == 2)
             {   Debug.Log(indexStand);
                 var animal = listTreeSpawned[indexStand].AnimalsOnTree[listTreeSpawned[indexStand].AnimalsOnTree.Count-indexBird-1];
-                var cage = Instantiate(listTypeObstacles[2],animal.transform.position,Quaternion.identity);
+                var cage = Instantiate(this.cage,animal.transform.position,Quaternion.identity);
                 cage.transform.parent = animal.transform;
+                animal.SetCage(cage);
+                gameManager.SetAnimalOnCage(animal);
                 for (int i = 0; i < listTreeSpawned.Count; i++)
                 {
                     foreach (var variaAnimal in listTreeSpawned[i].AnimalsOnTree)//key
                     {
                         if (variaAnimal.getNameAnimal() == extralValues.ToString())
                         {
-                            var obj = Instantiate(listTypeObstacles[1],variaAnimal.transform.position,Quaternion.identity);
+                            var obj = Instantiate(key,variaAnimal.transform.position,Quaternion.identity);
                             obj.transform.parent = variaAnimal.transform; 
+                            variaAnimal.SetKeyUnlocked(obj);
                             goto endLoop;
                         }
                     }
                 }
+                GameManager.Instance.SetTypeEffectItem(type);
                 endLoop: ;
             }
             else if (type == 3)
             {
                 var animal = listTreeSpawned[indexStand].AnimalsOnTree[listTreeSpawned[indexStand].AnimalsOnTree.Count-indexBird-1];
-                var egg = Instantiate(listTypeObstacles[4],animal.transform.position,Quaternion.identity);
+                var egg = Instantiate(this.egg,animal.transform.position,Quaternion.identity);
                 egg.transform.parent = animal.transform;
+                animal.SetEgg(egg);
+                gameManager.SetAnimalOnEgg(animal);
+               
                 for (int i = 0; i < listTreeSpawned.Count; i++)
                 {
                     foreach (var variaAnimal in listTreeSpawned[i].AnimalsOnTree)//hammer
                     {   
                         if (variaAnimal.getNameAnimal() == extralValues.ToString())
                         {
-                          //  Debug.Log(extralValues);
-                            var obj = Instantiate(listTypeObstacles[3],variaAnimal.transform.position,Quaternion.identity);
+                      
+                            var obj = Instantiate(hammer,variaAnimal.transform.position,Quaternion.identity);
                             obj.transform.parent = variaAnimal.transform;
-                         
+                            variaAnimal.SetHammer(obj);
                             goto endLoop;
                         }
                     }
@@ -183,9 +202,9 @@ public class GenerateTree : MonoBehaviour
                 clock.transform.parent = animal.transform;
                 for (int i = 0; i < levelDataExtralConfig[j].extralValues.Length; i+=2)
                 {
-                     int indexTree = levelDataExtralConfig[j].extralValues[i];
+                     int indexTree = levelDataExtralConfig[j].extralValues[i+1];
                      Debug.Log(indexTree);
-                     int indexBirdSleep = levelDataExtralConfig[j].extralValues[i+1];
+                     int indexBirdSleep = levelDataExtralConfig[j].extralValues[i];
                      Debug.Log(indexBirdSleep);
                      listTreeSpawned[indexTree].AnimalsOnTree[indexBirdSleep].Sleep();
                 }

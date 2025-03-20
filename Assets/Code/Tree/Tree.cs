@@ -130,7 +130,7 @@ public class Tree : MonoBehaviour
 
     
     private void MoveAnimalsTreeEmptys()
-    {
+    {   
             var checkSideViewPos = Camera.main.WorldToViewportPoint(transform.position);
             var listAnimalsMove = GameView.Instance.GetAnimalsClicked();
             for (int i = 0; i <listAnimalsMove.Count; i++)
@@ -147,14 +147,13 @@ public class Tree : MonoBehaviour
                 }
                 GameView.Instance.RemoveAnimalOnTreeClicked(listAnimalsMove[i]);
             }
+            GameManager.Instance.AnimalJump();
 
     }
     private void MoveAnimals()
     {
         var checkSideViewPos = Camera.main.WorldToViewportPoint(transform.position);
         var listAnimalsMove = GameView.Instance.GetAnimalsClicked();
-
-        // Kiểm tra danh sách rỗng hoặc số lượng slot không hợp lệ
         int countToMove = Mathf.Min(slot - listAnimalOnTree.Count, listAnimalsMove.Count);
         if (countToMove <= 0) return;
 
@@ -173,9 +172,9 @@ public class Tree : MonoBehaviour
             }
 
             position = newPosition;
-
             GameView.Instance.RemoveAnimalOnTreeClicked(listAnimalsMove[i]);
         }
+        GameManager.Instance.AnimalJump();
     }
 
     private void OnMouseDown()
@@ -214,6 +213,10 @@ public class Tree : MonoBehaviour
             {
                 if (nameTopInline == listAnimalOnTree[i].getNameAnimal())
                 {
+                    if (listAnimalOnTree[i].Cage != null || listAnimalOnTree[i].Egg != null)
+                    {
+                        break;
+                    }
                     listAnimalsCanMove.Add(listAnimalOnTree[i]);
                 }
                 else break;
@@ -267,8 +270,10 @@ public class Tree : MonoBehaviour
         {
             return false;
         }
-
+        
         var animalHead = listAnimalOnTree[0].name;
+        bool checkHaveBombOnAnimal = false;
+        bool checkHaveKeyUnlockCage = false;
         foreach (var animal in listAnimalOnTree)
         {
             if (animal.name != animalHead)
@@ -277,6 +282,27 @@ public class Tree : MonoBehaviour
             }
         }
 
+        foreach (var animal in listAnimalOnTree)
+        {
+            if (animal.GetBombInAnimal()!=null)
+            {
+                animal.Bomb.BombExploed();
+            }
+        }
+        foreach (var animal in listAnimalOnTree)
+        {
+            if (animal.KeyUnlock!=null)
+            {
+                GameManager.Instance.AnimalOnCage.UnlockCage();
+                animal.HideKey();
+            }
+
+            if (animal.Hammer != null)
+            {
+                GameManager.Instance.AnimalOnEgg.BreakEgg();
+                animal.HideHammer();
+            }
+        }
         return true;
     }
 
