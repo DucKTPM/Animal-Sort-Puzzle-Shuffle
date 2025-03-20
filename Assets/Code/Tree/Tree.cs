@@ -17,6 +17,13 @@ public class Tree : MonoBehaviour
     [SerializeField] private List<Animal> listAnimalOnTree = new List<Animal>();
     [SerializeField] private int slot;
     [SerializeField] private float space = 0.5f;
+    [SerializeField] private CageTree cageTree;
+    [SerializeField] private bool lockTree = false;
+    public bool LockTree { get { return lockTree; } set { lockTree = value; } }
+    public void SetCageTree(CageTree cageTree)
+    {
+        this.cageTree = cageTree;
+    }
     public List<Animal> AnimalsOnTree=> listAnimalOnTree;    
     private bool stateClicked = false;
 
@@ -203,17 +210,16 @@ public class Tree : MonoBehaviour
             }
             GameView.Instance.AnimalsCancelClicked();
         }
-        else if (GameView.Instance.StateClickedTree == false && listAnimalOnTree.Count !=0) // chưa cây nào được chọn và cây đấy phải có chim
+        else if (GameView.Instance.StateClickedTree == false && listAnimalOnTree.Count !=0 && lockTree!= true) // chưa cây nào được chọn và cây đấy phải có chim
         {
-           GameView.Instance.setStateClickedTree(true);
+          
             var listAnimalsCanMove = new List<Animal>();
             var nameTopInline = listAnimalOnTree[listAnimalOnTree.Count - 1].getNameAnimal();
-
             for (int i = listAnimalOnTree.Count - 1; i >= 0; i--)
             {
                 if (nameTopInline == listAnimalOnTree[i].getNameAnimal())
                 {
-                    if (listAnimalOnTree[i].Cage != null || listAnimalOnTree[i].Egg != null)
+                    if (listAnimalOnTree[i].Cage != null || listAnimalOnTree[i].Egg != null || listAnimalOnTree[i].Sleeping == true)
                     {
                         break;
                     }
@@ -222,8 +228,13 @@ public class Tree : MonoBehaviour
                 else break;
             }
 
-            GameView.Instance.SetTree(this);
-            GameView.Instance.SetAnimalsClick(listAnimalsCanMove);
+            if (listAnimalsCanMove.Count > 0)
+            {
+                GameView.Instance.setStateClickedTree(true);
+                GameView.Instance.SetTree(this);
+                GameView.Instance.SetAnimalsClick(listAnimalsCanMove);
+            }
+           
         }
         else
         {
@@ -291,7 +302,7 @@ public class Tree : MonoBehaviour
         }
         foreach (var animal in listAnimalOnTree)
         {
-            if (animal.KeyUnlock!=null)
+            if (animal.KeyUnlock!=null&& GameManager.Instance.TypeEffectItem ==1)
             {
                 GameManager.Instance.AnimalOnCage.UnlockCage();
                 animal.HideKey();
@@ -301,6 +312,17 @@ public class Tree : MonoBehaviour
             {
                 GameManager.Instance.AnimalOnEgg.BreakEgg();
                 animal.HideHammer();
+            }
+
+            if (animal.Clock != null)
+            {
+                GameManager.Instance.AnimalWakeUp();
+                animal.HideClock();
+            }
+
+            if (GameManager.Instance.TypeEffectItem == 5 && animal.KeyUnlock!=null)
+            {
+                GameManager.Instance.RemoveKeyUnlock(animal.KeyUnlock);
             }
         }
         return true;
@@ -367,5 +389,12 @@ public class Tree : MonoBehaviour
     public void CloseTree()
     {
         StartEffectToClose();
+    }
+
+    public void UnlockTree()
+    {
+        lockTree = false;
+       cageTree.gameObject.SetActive(false);
+      
     }
 }

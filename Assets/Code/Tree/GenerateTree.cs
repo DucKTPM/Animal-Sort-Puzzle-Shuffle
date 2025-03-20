@@ -16,9 +16,11 @@ public class GenerateTree : MonoBehaviour
     [SerializeField] private Cage cage;
     [SerializeField] private Egg egg;
     [SerializeField] private Hammer hammer;
-
+    [SerializeField] private Clock clock;
+    [SerializeField] private CageTree cageTree;
     public List<GameObject> ListTypeObstacles => listTypeObstacles;
     public List<Tree> ListTreeSpawned => listTreeSpawned;
+   
 
     public void StartGenerateTree(LevelData levelData)
     {
@@ -198,8 +200,9 @@ public class GenerateTree : MonoBehaviour
             else if (type == 4)
             {
                 var animal = listTreeSpawned[indexStand].AnimalsOnTree[listTreeSpawned[indexStand].AnimalsOnTree.Count-indexBird-1];
-                var clock = Instantiate(listTypeObstacles[5],animal.transform.position,Quaternion.identity);
+                var clock = Instantiate(this.clock,animal.transform.position,Quaternion.identity);
                 clock.transform.parent = animal.transform;
+                animal.SetClock(clock);
                 for (int i = 0; i < levelDataExtralConfig[j].extralValues.Length; i+=2)
                 {
                      int indexTree = levelDataExtralConfig[j].extralValues[i+1];
@@ -207,29 +210,63 @@ public class GenerateTree : MonoBehaviour
                      int indexBirdSleep = levelDataExtralConfig[j].extralValues[i];
                      Debug.Log(indexBirdSleep);
                      listTreeSpawned[indexTree].AnimalsOnTree[indexBirdSleep].Sleep();
+                     gameManager.AddAnimalsSleep(listTreeSpawned[indexTree].AnimalsOnTree[indexBirdSleep]);
                 }
             }
             else if (type == 5)
             {
                 var treeCage = listTreeSpawned[indexStand];
-                var cageTree = Instantiate(listTypeObstacles[6],treeCage.transform.position,Quaternion.identity);
+                var cageTree = Instantiate(this.cageTree,treeCage.transform.position,Quaternion.identity);
                 cageTree.transform.parent = treeCage.transform;
+                treeCage.LockTree = true;
+                GameManager.Instance.SetTypeEffectItem(type);
+                GameManager.Instance.TreeLock = treeCage;
+                treeCage.SetCageTree(cageTree);
                 int count = 0;
-                foreach (var variaAnimal in treeCage.AnimalsOnTree)
+                List<Animal> animalsSpawned = new List<Animal>();
+                bool flag = false;
+                foreach (var tree in listTreeSpawned)
                 {
-                    foreach (var treeSpawned in listTreeSpawned)
+                    foreach (var animal in tree.AnimalsOnTree)
                     {
-                        foreach (var animal in treeSpawned.AnimalsOnTree)
+                        flag = true;
+                        foreach (var animaCage in treeCage.AnimalsOnTree)
                         {
-                            if (variaAnimal.name != animal.name && count <=1)
+                            if (animaCage.getNameAnimal() == animal.getNameAnimal())
                             {
-                                var obj = Instantiate(listTypeObstacles[1],animal.transform.position,Quaternion.identity);
-                                obj.transform.parent = animal.transform;
-                                count++;
+                                flag = false;
                             }
                         }
+                        if (flag)
+                        animalsSpawned.Add(animal);
                     }
                 }
+                Animal animalTemp = new Animal();
+                foreach (var animal in animalsSpawned)
+                {
+                    if (count <=1 && animalTemp.getNameAnimal()!=animal.getNameAnimal())
+                    {
+                        var obj = Instantiate(key,animal.transform.position,Quaternion.identity);
+                        obj.transform.parent = animal.transform;
+                        gameManager.AddKeyUnlock(obj);
+                        animal.SetKeyUnlocked(obj); 
+                        animalTemp = animal;
+                        count++;
+                    }
+                 }
+                // foreach (var variaAnimal in treeCage.AnimalsOnTree)
+                // {
+                //     foreach (var treeSpawned in listTreeSpawned)
+                //     {
+                //         foreach (var animal in treeSpawned.AnimalsOnTree)
+                //         {
+                //             if (variaAnimal.name != animal.name && count <=1)
+                //             {
+                //                 
+                //             }
+                //         }
+                //     }
+                // }
             }
         }
         }

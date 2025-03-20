@@ -10,7 +10,7 @@ public class LevelDataManager : MonoBehaviour
 {
     private int currentLevelIndex
     {
-        get=>PlayerPrefs.GetInt("currentLevelIndex",40);
+        get=>PlayerPrefs.GetInt("currentLevelIndex",51);
         set{PlayerPrefs.SetInt("currentLevelIndex",value);}
         
     }

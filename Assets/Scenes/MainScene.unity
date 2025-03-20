@@ -236,6 +236,8 @@ MonoBehaviour:
   cage: {fileID: -7333339521377277338, guid: 65ada1f6bbb5fd94faacb8cdd414f6c3, type: 3}
   egg: {fileID: 2778775858142448893, guid: adafce5592fd3cc42a18f14738029450, type: 3}
   hammer: {fileID: -1269536016913307415, guid: 5f6f053fa84e71d45903624334d0e7f8, type: 3}
+  clock: {fileID: -7132087398756295006, guid: 1f11bbd3d4b0e4a469135f6a752628ab, type: 3}
+  cageTree: {fileID: 7636063912634219118, guid: 516eff2cc16b33d448104c3c735378b4, type: 3}
 --- !u!1 &757539131
 GameObject:
   m_ObjectHideFlags: 0

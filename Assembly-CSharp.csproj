@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Assets\Code\Tree\GenerateTree.cs" />
     <Compile Include="Assets\Code\Obstacle\Type2\KeyUnlock.cs" />
+    <Compile Include="Assets\Code\Obstacle\Type4\Clock.cs" />
     <Compile Include="Assets\Code\Animal\Animal.cs" />
     <Compile Include="Assets\Code\Obstacle\Type3\Hammer.cs" />
     <Compile Include="Assets\Code\Obstacle\Bomb\Bomb.cs" />
@@ -56,6 +57,7 @@
     <Compile Include="Assets\Code\GameManager\GameManager.cs" />
     <Compile Include="Assets\Code\Obstacle\Type2\Cage.cs" />
     <Compile Include="Assets\Code\Obstacle\Item.cs" />
+    <Compile Include="Assets\Code\Obstacle\Type5\CageTree.cs" />
     <Compile Include="Assets\Code\Obstacle\Type3\Egg.cs" />
     <None Include="Assets\LevelData\Level_4149.json" />
     <None Include="Assets\LevelData\Level_1099.json" />

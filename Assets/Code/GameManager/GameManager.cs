@@ -10,22 +10,62 @@ public class GameManager : MonoBehaviour
     [SerializeField] private LevelDataManager levelDataManager;
     [SerializeField] private GenerateTree generateTree;
     private int typeEffectItem = 0;
+    public int TypeEffectItem { get => typeEffectItem; set => typeEffectItem = value; }
     public static GameManager Instance;
     private int valueTimeBomb = 0;
     private Bomb bomb;
     private Cage cage;
     private Animal animalOnCage;
-
+   [SerializeField] private List<KeyUnlock> listKeyUnlock = new List<KeyUnlock>();
     public Animal AnimalOnEgg => animalOnEgg;
     
     private Animal animalOnEgg;
- 
+    private Tree treeLock;
+    public Tree TreeLock { get => treeLock; set => treeLock = value; }
     public Animal AnimalOnCage => animalOnCage;
+    private List<Animal> animalsSleep = new List<Animal>();
+    public List<Animal> AnimalsSleep => animalsSleep;
+    private void StartGame()
+    {   
+        Setup();
+        LevelData levelData = levelDataManager.ReadLevelData();
+        gameView.StartGenerateMapLevel(levelData);
+        if (typeEffectItem == 1)
+        {   
+            coroutineType1 =  StartCoroutine(IeUpdateUserControlType1());
+        }
+        StartCoroutine(StartWaitWinGame());
+    }
 
+    private void Setup()
+    {
+        
+        typeEffectItem = 0;
+        stateGame = true;
+        bomb = null;
+        cage = null;
+        animalOnCage = null;
+        animalOnEgg = null;
+        if (animalsSleep.Count != 0)
+        {
+            animalsSleep.Clear();
+        }
+
+        if (listKeyUnlock.Count !=0)
+        {
+            listKeyUnlock.Clear();
+        }
+
+    }
+    public void AddAnimalsSleep(Animal animal)
+    {
+        animalsSleep.Add(animal);
+    }
     public void SetAnimalOnEgg(Animal animalOnEgg)
     {
         this.animalOnEgg = animalOnEgg;
     }
+    
     
     public void SetAnimalOnCage(Animal animal)
     {
@@ -78,18 +118,7 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    private void StartGame()
-    { 
-        typeEffectItem = 0;
-        stateGame = true;
-        LevelData levelData = levelDataManager.ReadLevelData();
-        gameView.StartGenerateMapLevel(levelData);
-        if (typeEffectItem == 1)
-        {   
-           coroutineType1 =  StartCoroutine(IeUpdateUserControlType1());
-        }
-        StartCoroutine(StartWaitWinGame());
-    }
+ 
 
     private IEnumerator IeUpdateUserControlType1()
     {
@@ -134,5 +163,27 @@ public class GameManager : MonoBehaviour
         }
         stateGame = false;
         return true;    
+    }
+
+    public void AnimalWakeUp()
+    {
+        foreach (Animal animal in AnimalsSleep)
+        {
+            animal.WakeUp();
+        }
+    }
+
+    public void AddKeyUnlock(KeyUnlock keyUnlock)
+    {
+        listKeyUnlock.Add(keyUnlock);
+    }
+
+    public void RemoveKeyUnlock(KeyUnlock keyUnlock)
+    {
+        listKeyUnlock.Remove(keyUnlock);
+        if (listKeyUnlock.Count <=0)
+        {
+            treeLock.UnlockTree();
+        }
     }
 }
