@@ -17,8 +17,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textAddTrees;
     [SerializeField] private TextMeshProUGUI textUndo;
     [SerializeField] private int numberUndo = 0;
-    public int NumberUndo=> numberUndo;
-    public void AddTreeOnScene()
+    public int NumberUndo => numberUndo;
+
+   
+
+public void AddTreeOnScene()
     {
         if (addTrees >0)
         {

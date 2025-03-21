@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -149,6 +150,19 @@ public class GenerateTree : MonoBehaviour
                     listTreeSpawned.Add(obj);
                     leftRight = !leftRight;
                     count++;
+                    if (slot == 5)
+                    {
+                        obj.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                        obj.SetSpace(0.4f);
+                        obj.ScaleTree(0.8f,3/4);
+                    }
+
+                    if (slot==6)
+                    {
+                        obj.transform.localScale = new Vector3(0.65f, 0.65f, 0.75f);
+                        obj.SetSpace(0.3f);
+                       // obj.ScaleTree(0.9f,3f/4);
+                    }
                 }
                 else
                 {
@@ -159,6 +173,17 @@ public class GenerateTree : MonoBehaviour
                     listTreeSpawned.Add(obj);
                     leftRight = !leftRight;
                     count++;
+                    if (slot == 5)
+                    {
+                        obj.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                        obj.SetSpace(0.4f);
+                    }
+
+                    if (slot==6)
+                    {
+                        obj.transform.localScale = new Vector3(0.65f, 0.65f, 0.75f);
+                        obj.SetSpace(0.3f);
+                    }
                 }
 
                 if (count == 2)
@@ -179,6 +204,17 @@ public class GenerateTree : MonoBehaviour
                     listTreeSpawned.Add(obj);
                     leftRight = !leftRight;
                     count++;
+                    if (slot == 5)
+                    {
+                        obj.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                        obj.SetSpace(0.4f);
+                    }
+
+                    if (slot==6)
+                    {
+                        obj.transform.localScale = new Vector3(0.65f, 0.65f, 0.75f);
+                        obj.SetSpace(0.3f);
+                    }
                 }
                 else
                 {
@@ -190,6 +226,18 @@ public class GenerateTree : MonoBehaviour
 
                     leftRight = !leftRight;
                     count++;
+                    if (slot == 5)
+                    {
+                        obj.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
+                        obj.SetSpace(0.4f);
+                    }
+
+                    if (slot==6)
+                    {
+                        obj.transform.localScale = new Vector3(0.65f, 0.65f, 0.75f);
+                        obj.SetSpace(0.3f);
+                    }
+                 
                 }
 
                 if (count == 2)
@@ -205,6 +253,7 @@ public class GenerateTree : MonoBehaviour
         yield return null;
     }
 
+  
     private void SpawnObstace(ExtralsConfig[] levelDataExtralConfig)
     {
         if (levelDataExtralConfig == null)

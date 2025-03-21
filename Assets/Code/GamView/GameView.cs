@@ -18,7 +18,10 @@ public class GameView : MonoBehaviour
     {
         Instance = this;
     }
-
+    public void ClearSteps()
+    {
+        steps.Clear();
+    }
     public void AddStep(Step step)
     {
         steps.Add(step);

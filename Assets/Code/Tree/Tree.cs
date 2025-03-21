@@ -19,11 +19,26 @@ public class Tree : MonoBehaviour
     [SerializeField] private float space = 0.5f;
     [SerializeField] private CageTree cageTree;
     [SerializeField] private bool lockTree = false;
+    [SerializeField] private GameObject treePrefab;
+  
     public bool LockTree { get { return lockTree; } set { lockTree = value; } }
     public void SetCageTree(CageTree cageTree)
     {
         this.cageTree = cageTree;
     }
+    public void SetSpace(float space)
+    {
+        this.space = space;
+    }
+
+    public void ScaleTree(float scale,float x)
+    {
+        treeView.transform.localScale = new Vector3(scale, scale, scale);
+        var vector = boxCollider2D.size;
+        vector.x += vector.x * x;
+        boxCollider2D.size = new Vector2(vector.x, boxCollider2D.size.y);
+    }
+    
     public List<Animal> AnimalsOnTree=> listAnimalOnTree;    
 
     private int currentAnimal = 0;
@@ -157,7 +172,7 @@ public class Tree : MonoBehaviour
                 
                 
             }
-            if (!CheckEnoghAnimalOnTree())
+            if (CheckEnoghAnimalOnTree()!= true)
             {
                 AddStepToList(listAnimalsMove,GameView.Instance.GetTree(),this);
             }
@@ -201,7 +216,7 @@ public class Tree : MonoBehaviour
             GameView.Instance.RemoveAnimalOnTreeClicked(listAnimalsMove[i]);
         }
 
-        if (!CheckEnoghAnimalOnTree())
+        if (CheckEnoghAnimalOnTree()!= true)
         {
             AddStepToList(listAnimalsMove,GameView.Instance.GetTree(),this);
         }
@@ -350,6 +365,7 @@ public class Tree : MonoBehaviour
                 GameManager.Instance.RemoveKeyUnlock(animal.KeyUnlock);
             }
         }
+        GameView.Instance.ClearSteps();
         return true;
     }
 
