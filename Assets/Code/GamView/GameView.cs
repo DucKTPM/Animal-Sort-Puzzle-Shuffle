@@ -12,11 +12,51 @@ public class GameView : MonoBehaviour
     public static GameView Instance;
     private bool stateClickedTree = false;
     public bool StateClickedTree => stateClickedTree;
+    [SerializeField] private List<Step> steps = new List<Step>();
+    public List<Step> Steps => steps;
     private void OnEnable()
     {
         Instance = this;
     }
 
+    public void AddStep(Step step)
+    {
+        steps.Add(step);
+    }
+
+    public void UndoAction()
+    {
+        int numberUndo = GameManager.Instance.NumberUndo;
+        if (numberUndo > 0 && steps.Count > 0)
+        {
+           
+            var step = steps[steps.Count - 1];
+            var checkSideViewPos = Camera.main.WorldToViewportPoint(step.TreeStart.transform.position);
+            Vector3 newPosition = step.TreeStart.PositionMove;
+            foreach (var animal in step.Animals)
+            {
+                step.TreeStart.AnimalsOnTree.Add(animal);
+                animal.Jump(step.TreeStart.PositionMove,0.5f,step.TreeStart);
+                step.TreeEnd.RemoveAnimal(animal);
+               
+                if (checkSideViewPos.x <= 0.5f)
+                {
+                    newPosition.x += 0.5f;
+                }
+                else
+                {
+                    newPosition.x -= 0.5f;
+                }
+                step.TreeStart.SetPostionMove(newPosition);
+
+            }
+
+            steps.Remove(step);
+            GameManager.Instance.UndoClick();
+        }
+        
+    }
+    
     public void setStateClickedTree(bool state)
     {
         stateClickedTree = state;
@@ -84,6 +124,10 @@ public class GameView : MonoBehaviour
     }
     public void StartGenerateMapLevel(LevelData levelData)
     {
+        if(steps.Count>0)
+        {
+            steps.Clear();
+        }
         if (levelData != null)
         {
             generateTree.StartGenerateTree(levelData);

@@ -45,14 +45,17 @@
     <Analyzer Include="E:\My Project\2022.3.39f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Code\GamView\Step.cs" />
     <Compile Include="Assets\Code\Tree\GenerateTree.cs" />
     <Compile Include="Assets\Code\Obstacle\Type2\KeyUnlock.cs" />
     <Compile Include="Assets\Code\Obstacle\Type4\Clock.cs" />
     <Compile Include="Assets\Code\Animal\Animal.cs" />
     <Compile Include="Assets\Code\Obstacle\Type3\Hammer.cs" />
     <Compile Include="Assets\Code\Obstacle\Bomb\Bomb.cs" />
+    <Compile Include="Assets\Code\Popup\Level\LevelPopup.cs" />
     <Compile Include="Assets\Code\GamView\GameView.cs" />
     <Compile Include="Assets\Code\Tree\Tree.cs" />
+    <Compile Include="Assets\Code\Popup\MenuWinGame\MenuWinGame.cs" />
     <Compile Include="Assets\LevelData\LevelDataManager\LevelDataManager.cs" />
     <Compile Include="Assets\Code\GameManager\GameManager.cs" />
     <Compile Include="Assets\Code\Obstacle\Type2\Cage.cs" />
@@ -2352,6 +2355,7 @@
     <None Include="Assets\LevelData\Level_3668.json" />
     <None Include="Assets\LevelData\Level_326.json" />
     <None Include="Assets\LevelData\Level_2370.json" />
+    <None Include="Assets\Font\OFL.txt" />
     <None Include="Assets\LevelData\Level_434.json" />
     <None Include="Assets\LevelData\Level_768.json" />
     <None Include="Assets\LevelData\Level_1934.json" />

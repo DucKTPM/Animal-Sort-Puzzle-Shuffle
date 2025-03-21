@@ -9,6 +9,14 @@ public class Bomb : MonoBehaviour
 {
      private int _time; 
     [SerializeField] private TextMeshPro textMesh;
+    [SerializeField] private MeshRenderer meshRenderer;
+
+    private void OnEnable()
+    {
+        meshRenderer.sortingLayerName = "item";
+        meshRenderer.sortingOrder = 1;
+    }
+
     public void SetValueBomb(int x)
     {
         _time = x;

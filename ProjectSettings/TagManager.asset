@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Animal
   - Tree
+  - ItemView
+  - Text
   layers:
   - Default
   - TransparentFX
@@ -14,7 +16,7 @@ TagManager:
   - Water
   - UI
   - Item
-  - 
+  - text
   - 
   - 
   - 
@@ -42,4 +44,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: item
+    uniqueID: 3537381581
     locked: 0

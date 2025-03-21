@@ -25,17 +25,17 @@ public class Tree : MonoBehaviour
         this.cageTree = cageTree;
     }
     public List<Animal> AnimalsOnTree=> listAnimalOnTree;    
-    private bool stateClicked = false;
 
     private int currentAnimal = 0;
 
     public void StartSpawnAnimalOnTree(int[] idAnimals)
     {
         StartCoroutine(IeStartSpawnAnimal(idAnimals));
-        stateClicked = false;
+  
     }
 
     Vector3 position = new Vector3();
+    public Vector3 PositionMove => position;
 
     private IEnumerator IeStartSpawnAnimal(int[] idAnimals)
     {
@@ -80,7 +80,7 @@ public class Tree : MonoBehaviour
         this.slot = slot;
     }
 
-    private void StartEffectToAppear()
+    public void StartEffectToAppear()
     {
         var destination = transform.position;
         var viewPostion = Camera.main.WorldToViewportPoint(destination);
@@ -122,6 +122,7 @@ public class Tree : MonoBehaviour
 
         transform.position = destination;
         gameObject.SetActive(false);
+        Destroy(gameObject);
     }
     private IEnumerator IeStartEffectToAppear(Vector3 destination)
     {
@@ -153,9 +154,27 @@ public class Tree : MonoBehaviour
                     position.x -= space;
                 }
                 GameView.Instance.RemoveAnimalOnTreeClicked(listAnimalsMove[i]);
+                
+                
+            }
+            if (!CheckEnoghAnimalOnTree())
+            {
+                AddStepToList(listAnimalsMove,GameView.Instance.GetTree(),this);
             }
             GameManager.Instance.AnimalJump();
 
+    }
+
+    private void AddStepToList(List<Animal> animals,Tree treeStart,Tree treeEnd)
+    {
+        Step step = new Step(animals,treeStart,treeEnd);
+      
+        GameView.Instance.AddStep(step);
+    }
+
+    public void SetPostionMove(Vector3 position)
+    {
+        this.position = position;
     }
     private void MoveAnimals()
     {
@@ -181,12 +200,18 @@ public class Tree : MonoBehaviour
             position = newPosition;
             GameView.Instance.RemoveAnimalOnTreeClicked(listAnimalsMove[i]);
         }
+
+        if (!CheckEnoghAnimalOnTree())
+        {
+            AddStepToList(listAnimalsMove,GameView.Instance.GetTree(),this);
+        }
+       
         GameManager.Instance.AnimalJump();
     }
 
     private void OnMouseDown()
     {
-        if (GameView.Instance.StateClickedTree == true) // nếu có cây được chọn
+        if (GameView.Instance.StateClickedTree == true && lockTree !=true && GameManager.Instance.StateGame == true ) // nếu có cây được chọn
         {
             if (GameView.Instance.GetTree() == this) // kiểm tra cây được chọn phải là cây này
             {
@@ -210,7 +235,7 @@ public class Tree : MonoBehaviour
             }
             GameView.Instance.AnimalsCancelClicked();
         }
-        else if (GameView.Instance.StateClickedTree == false && listAnimalOnTree.Count !=0 && lockTree!= true) // chưa cây nào được chọn và cây đấy phải có chim
+        else if (GameView.Instance.StateClickedTree == false && listAnimalOnTree.Count !=0 && lockTree!= true && GameManager.Instance.StateGame == true) // chưa cây nào được chọn và cây đấy phải có chim
         {
           
             var listAnimalsCanMove = new List<Animal>();
@@ -255,23 +280,25 @@ public class Tree : MonoBehaviour
             targetPosition.x -= 1;
             position.x = anchorSpawnAninmalRight.position.x;
         }
-
+        lockTree = true;
         yield return new WaitForSecondsRealtime(1.5f);
 
         targetPosition = Camera.main.ViewportToWorldPoint(targetPosition);
         targetPosition.z = 0;
+      
         foreach (var animal in listAnimalOnTree)
         {
             animal.Jump(targetPosition, 0.3f, this);
         }
-
+        
         yield return new WaitForSecondsRealtime(0.5f);
+     
         foreach (var animal in listAnimalOnTree)
         {
             animal.gameObject.SetActive(false);
         }
-    
         listAnimalOnTree.Clear();
+        lockTree = false;
         GameManager.Instance.StartCheckWinGame();
     }
 
@@ -283,8 +310,6 @@ public class Tree : MonoBehaviour
         }
         
         var animalHead = listAnimalOnTree[0].name;
-        bool checkHaveBombOnAnimal = false;
-        bool checkHaveKeyUnlockCage = false;
         foreach (var animal in listAnimalOnTree)
         {
             if (animal.name != animalHead)
