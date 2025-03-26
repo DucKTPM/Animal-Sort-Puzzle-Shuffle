@@ -102,7 +102,11 @@ public class Animal : MonoBehaviour
 
     public void RemoveClickedAnimal()
     {
-        animalRenderer.color = Color.white;
+        if (animalRenderer!=null)
+        {
+            animalRenderer.color = Color.white;
+        }
+      
     }
 
     public void Jump(Vector3 endPosition, float h, Tree anchorTree)

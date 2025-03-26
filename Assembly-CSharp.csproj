@@ -61,6 +61,7 @@
     <Compile Include="Assets\Code\Obstacle\Type2\Cage.cs" />
     <Compile Include="Assets\Code\Obstacle\Item.cs" />
     <Compile Include="Assets\Code\Obstacle\Type5\CageTree.cs" />
+    <Compile Include="Assets\Gift\Coin\Coin.cs" />
     <Compile Include="Assets\Code\Obstacle\Type3\Egg.cs" />
     <None Include="Assets\LevelData\Level_4149.json" />
     <None Include="Assets\LevelData\Level_1099.json" />

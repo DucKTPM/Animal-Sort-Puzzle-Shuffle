@@ -20,7 +20,7 @@ public class Tree : MonoBehaviour
     [SerializeField] private CageTree cageTree;
     [SerializeField] private bool lockTree = false;
     [SerializeField] private GameObject treePrefab;
-  
+    [SerializeField] private Coin coin;
     public bool LockTree { get { return lockTree; } set { lockTree = value; } }
     public void SetCageTree(CageTree cageTree)
     {
@@ -30,18 +30,36 @@ public class Tree : MonoBehaviour
     {
         this.space = space;
     }
+    
 
-    public void ScaleTree(float scale,float x)
+    public void ScaleTree(float scale, float x)
     {
         treeView.transform.localScale = new Vector3(scale, scale, scale);
-        var vector = boxCollider2D.size;
-        vector.x += vector.x * x;
-        boxCollider2D.size = new Vector2(vector.x, boxCollider2D.size.y);
+        var temp = boxCollider2D.size;
+        boxCollider2D.size = new Vector2(temp.x+x, temp.y);
     }
     
     public List<Animal> AnimalsOnTree=> listAnimalOnTree;    
 
     private int currentAnimal = 0;
+
+    private void OnEnable()
+    {
+        SetUpTree();
+    }
+
+    private void SetUpTree()
+    {
+        if (slot == 5)
+        {
+            space = 0.4f;
+        }
+
+        if (slot == 6)
+        {
+            space = 0.3f;
+        }
+    }
 
     public void StartSpawnAnimalOnTree(int[] idAnimals)
     {
@@ -74,12 +92,31 @@ public class Tree : MonoBehaviour
                 var obj = Instantiate(animals[idAnimals[i]], position, Quaternion.identity, parent: transform);
                 listAnimalOnTree.Add(obj);
                 position.x += space;
+                if (slot == 5)
+                {
+                    obj.transform.localScale = new Vector3(0.75f, 0.75f, 1);
+                }
+
+                if (slot==6)
+                {
+                    obj.transform.localScale = new Vector3(0.70f, 0.70f, 1);
+                }
             }else
             if (viewPostion.x > 0.5f)
             {
                 var obj = Instantiate(animals[idAnimals[i]], position, Quaternion.identity, parent: transform);
                 position.x -= space;
                 listAnimalOnTree.Add(obj);
+                if (slot == 5)
+                {
+                    obj.transform.localScale = new Vector3(0.75f, 0.75f, 1);
+                }
+
+                if (slot==6)
+                {
+                    obj.transform.localScale = new Vector3(0.70f, 0.70f, 1);
+                }
+                
             }
 
             currentAnimal++;
@@ -304,6 +341,7 @@ public class Tree : MonoBehaviour
         foreach (var animal in listAnimalOnTree)
         {
             animal.Jump(targetPosition, 0.3f, this);
+            var coin = Instantiate(this.coin,animal.transform.position,Quaternion.identity);
         }
         
         yield return new WaitForSecondsRealtime(0.5f);

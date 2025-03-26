@@ -17,11 +17,32 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textAddTrees;
     [SerializeField] private TextMeshProUGUI textUndo;
     [SerializeField] private int numberUndo = 0;
+    [SerializeField] private int nextLevel = 0;
+    [SerializeField] private TextMeshProUGUI textNextLevel;
+    [SerializeField] private MenuWinGame menuGameOver;
     public int NumberUndo => numberUndo;
+        
+    public int NextLevel => nextLevel;
 
+    public void NextLevelUp()
+    {
+        if (nextLevel>0)
+        {
+            stateGame = false;
+            nextLevel--;
+           
+            
+        }
    
+    }
 
-public void AddTreeOnScene()
+    public void SetTextNextLevel()
+    {
+        textNextLevel.text = nextLevel.ToString();
+    }
+    
+
+    public void AddTreeOnScene()
     {
         if (addTrees >0)
         {
@@ -72,13 +93,22 @@ public void AddTreeOnScene()
 
     public void RestartGame()
     {
-        if (coroutineRestart == null) 
+        if (coroutineRestart == null)
+        {
+            ClearLevelPlay();
             coroutineRestart = StartCoroutine(IeRestartGame());
+        }
+          
+    }
+
+    public void RestartGameOver()
+    {
+        menuGameOver.Hide();
+       StartGame();
     }
 
     private IEnumerator IeRestartGame()
     {
-        ClearLevelPlay();
         yield return new WaitForSeconds(1f);
         StartGame();
         yield return new WaitForSeconds(1f);
@@ -104,7 +134,7 @@ public void AddTreeOnScene()
     }
     private Coroutine croutineWaitWinGame = null;
     private void Setup()
-    {
+    {   SetTextNextLevel();
         SetTextAddTree();
         menuWinGame.Hide();
         levelPopup.SetTextLevelPopup(levelDataManager.CurrentLevelIndex.ToString());
@@ -197,7 +227,10 @@ public void AddTreeOnScene()
     private IEnumerator IeUpdateUserControlType1()
     {
         yield return new WaitUntil(() => valueTimeBomb <= 0);
-        Debug.Log("Game Over");
+        yield return new WaitForSeconds(1f);
+        ClearLevelPlay();
+        yield return new WaitForSeconds(1f);
+        menuGameOver.Show();
     }
 
     private IEnumerator StartWaitWinGame()
@@ -210,7 +243,11 @@ public void AddTreeOnScene()
 
     private void ClearLevelPlay()
     {
-        generateTree.CloseTreeSpawned();
+        if (generateTree.ListTreeSpawned!=null)
+        {
+            generateTree.CloseTreeSpawned();
+        }
+       
         // generateTree.ClearTreeSpawned();
     }
 
