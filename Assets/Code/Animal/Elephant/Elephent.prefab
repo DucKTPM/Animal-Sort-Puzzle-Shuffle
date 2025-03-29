@@ -51,6 +51,7 @@ MonoBehaviour:
   sleeping: 0
   cage: {fileID: 0}
   keyUnlock: {fileID: 0}
+  animator: {fileID: 4680859253717361732}
 --- !u!1001 &4016331744559128442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -143,6 +144,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: f4a5abb7172f9f246afbd32dab897240, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4680859253717361732}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: f4a5abb7172f9f246afbd32dab897240, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1770938124218908529}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: f4a5abb7172f9f246afbd32dab897240, type: 3}
 --- !u!4 &2347279729084049060 stripped
 Transform:
@@ -175,6 +179,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!210 &1770938124218908529
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3484431165300735687}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!212 &5206952054240770564 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 9222861036494824830, guid: f4a5abb7172f9f246afbd32dab897240, type: 3}

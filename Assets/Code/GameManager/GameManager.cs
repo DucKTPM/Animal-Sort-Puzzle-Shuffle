@@ -20,6 +20,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int nextLevel = 0;
     [SerializeField] private TextMeshProUGUI textNextLevel;
     [SerializeField] private MenuWinGame menuGameOver;
+    public GameObject totalPanel;
+
+    [SerializeField]
+    private int numberCoin
+    {
+        get=>PlayerPrefs.GetInt("numberCoin",0);
+        set=>PlayerPrefs.SetInt("numberCoin",value);
+    }
+    [SerializeField] private TextMeshProUGUI textCoin;
+    
     public int NumberUndo => numberUndo;
         
     public int NextLevel => nextLevel;
@@ -34,6 +44,11 @@ public class GameManager : MonoBehaviour
             
         }
    
+    }
+
+    public void SetTextCoin()
+    {
+        textCoin.text = numberCoin.ToString();
     }
 
     public void SetTextNextLevel()
@@ -133,11 +148,18 @@ public class GameManager : MonoBehaviour
         croutineWaitWinGame =  StartCoroutine(StartWaitWinGame());
     }
     private Coroutine croutineWaitWinGame = null;
+
+    public void AddCoin(int coin)
+    {
+        this.numberCoin += coin;
+        SetTextCoin();
+    }
     private void Setup()
     {   SetTextNextLevel();
         SetTextAddTree();
         menuWinGame.Hide();
         levelPopup.SetTextLevelPopup(levelDataManager.CurrentLevelIndex.ToString());
+        SetTextCoin();
         SetTextUndo();
         typeEffectItem = 0;
         stateGame = true;
@@ -227,6 +249,8 @@ public class GameManager : MonoBehaviour
     private IEnumerator IeUpdateUserControlType1()
     {
         yield return new WaitUntil(() => valueTimeBomb <= 0);
+        bomb.SetEffectBum();
+        
         yield return new WaitForSeconds(1f);
         ClearLevelPlay();
         yield return new WaitForSeconds(1f);

@@ -51,6 +51,7 @@ MonoBehaviour:
   sleeping: 0
   cage: {fileID: 0}
   keyUnlock: {fileID: 0}
+  animator: {fileID: 8336361775017806571}
 --- !u!1001 &1308994467629046365
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -113,7 +114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -6145704127622428784, guid: a0a2580d9499e1a41ba67a943e1a6965, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -4920178066002661558, guid: a0a2580d9499e1a41ba67a943e1a6965, type: 3}
       propertyPath: m_IsActive
@@ -144,6 +145,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: a0a2580d9499e1a41ba67a943e1a6965, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8336361775017806571}
+    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: a0a2580d9499e1a41ba67a943e1a6965, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8274424782172294108}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: a0a2580d9499e1a41ba67a943e1a6965, type: 3}
 --- !u!4 &361886125136995203 stripped
 Transform:
@@ -176,6 +180,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!210 &8274424782172294108
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571110133552233440}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_SortAtRoot: 0
 --- !u!212 &8071295995515972334 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 7073320452306251955, guid: a0a2580d9499e1a41ba67a943e1a6965, type: 3}

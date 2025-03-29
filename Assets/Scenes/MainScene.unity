@@ -1337,6 +1337,8 @@ MonoBehaviour:
   nextLevel: 5
   textNextLevel: {fileID: 1794681324}
   menuGameOver: {fileID: 226920189}
+  totalPanel: {fileID: 1408116287}
+  textCoin: {fileID: 2084090077}
 --- !u!114 &757539135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2426,7 +2428,7 @@ GameObject:
   - component: {fileID: 1408116290}
   - component: {fileID: 1408116289}
   m_Layer: 0
-  m_Name: Image
+  m_Name: TotalCoin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -22,6 +22,7 @@ public class Animal : MonoBehaviour
     private Clock clock;
     public Clock Clock => clock;
     public bool Sleeping => sleeping;
+    [SerializeField] private Animator animator;
     private void OnEnable()
     {
         sleeping = false;
@@ -92,7 +93,12 @@ public class Animal : MonoBehaviour
 
     public void Click()
     {
-        ChangeColor();
+        SetAnimation();
+    }
+
+    private void SetAnimation()
+    {
+        animator.SetTrigger("Click");
     }
 
     private void ChangeColor()
@@ -102,10 +108,8 @@ public class Animal : MonoBehaviour
 
     public void RemoveClickedAnimal()
     {
-        if (animalRenderer!=null)
-        {
-            animalRenderer.color = Color.white;
-        }
+        animator.SetTrigger("CancelClick");
+        
       
     }
 

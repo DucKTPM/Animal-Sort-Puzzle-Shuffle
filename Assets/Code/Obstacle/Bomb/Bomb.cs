@@ -10,6 +10,7 @@ public class Bomb : MonoBehaviour
      private int _time; 
     [SerializeField] private TextMeshPro textMesh;
     [SerializeField] private MeshRenderer meshRenderer;
+    [SerializeField] private Animator animator;
 
     private void OnEnable()
     {
@@ -26,8 +27,11 @@ public class Bomb : MonoBehaviour
     public void BombExploed()
     {
         GameManager.Instance.StopCrountineType1();
-        Debug.Log("bummm");
     }
 
-    
+    public void SetEffectBum()
+    {
+       animator.SetTrigger("Bum");
+       textMesh.gameObject.SetActive(false);
+    }
 }
