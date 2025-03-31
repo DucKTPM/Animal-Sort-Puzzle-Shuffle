@@ -78,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 9196804283075057165}
     - target: {fileID: 6016020228374427290, guid: 9e8603c8a0a911449967d99ad02a8369, type: 3}
       propertyPath: nameAnimal
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6016020228374427290, guid: 9e8603c8a0a911449967d99ad02a8369, type: 3}
       propertyPath: animalRenderer

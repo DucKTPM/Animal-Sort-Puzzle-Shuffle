@@ -15,8 +15,8 @@ public class Animal : MonoBehaviour
 
     [SerializeField] private KeyUnlock keyUnlock;
     public KeyUnlock KeyUnlock => keyUnlock;
-    private Egg egg;
-    public Egg Egg => egg;
+  [SerializeField]  private Egg  egg;
+    public  Egg Egg => egg;
     private Hammer hammer;
     public Hammer Hammer => hammer;
     private Clock clock;
@@ -39,15 +39,15 @@ public class Animal : MonoBehaviour
         this.hammer = hammer;
     }
 
-    public void BreakEgg()
-    {
-        egg.BreakEgg();
-        egg = null;
+    public void SetEggEmpty()
+    {       
+          egg.BreakEgg();
+            egg = null;
     }
 
     public void HideHammer()
     {
-        hammer.gameObject.SetActive(false);
+      hammer.HideHammer();
     }
 
     public void SetEgg(Egg egg)
@@ -67,8 +67,12 @@ public class Animal : MonoBehaviour
 
     public void UnlockCage()
     {
-        cage.UnLockCage();
-        cage = null;
+        if (cage != null)
+        {
+            cage.UnLockCage();
+            cage = null;
+        }
+      
     }
 
     public void SetCage(Cage cage)
@@ -109,8 +113,6 @@ public class Animal : MonoBehaviour
     public void RemoveClickedAnimal()
     {
         animator.SetTrigger("CancelClick");
-        
-      
     }
 
     public void Jump(Vector3 endPosition, float h, Tree anchorTree)
@@ -158,7 +160,7 @@ public class Animal : MonoBehaviour
     public void WakeUp()
     {
         sleeping = false;
-        RemoveClickedAnimal();
+      //  RemoveClickedAnimal();
     }
 
     public void HideClock()

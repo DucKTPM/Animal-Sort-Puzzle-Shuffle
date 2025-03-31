@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class CageTree : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField] private Lock _lock1;
+    [SerializeField] private Lock _lock2;
+    
+    public Lock Lock1 => _lock1;
+    
+    public Lock Lock2 => _lock2;
 }

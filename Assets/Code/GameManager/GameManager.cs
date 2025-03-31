@@ -46,6 +46,11 @@ public class GameManager : MonoBehaviour
    
     }
 
+    public void DeletAnimalOnEgg()
+    {
+        
+    }
+
     public void SetTextCoin()
     {
         textCoin.text = numberCoin.ToString();
@@ -89,9 +94,19 @@ public class GameManager : MonoBehaviour
     private Cage cage;
     private Animal animalOnCage;
     private int typeEffectItem = 0;
-    public Animal AnimalOnEgg => animalOnEgg;
-    private Animal animalOnEgg;
+
+    private List<Animal> animalOnEgg;
+    public void SetAnimalOnEgg(Animal animal)
+    {
+        if (animalOnEgg == null)
+        {
+            Debug.LogError("Animal is null! Cannot add to list.");
+            return;
+        }
+        animalOnEgg.Add(animal);
+    }
     private Tree treeLock;
+    
 
     public Tree TreeLock
     {
@@ -103,7 +118,7 @@ public class GameManager : MonoBehaviour
     private List<Animal> animalsSleep = new List<Animal>();
     public List<Animal> AnimalsSleep => animalsSleep;
 
-
+  
     private Coroutine coroutineRestart = null;
 
     public void RestartGame()
@@ -166,7 +181,7 @@ public class GameManager : MonoBehaviour
         bomb = null;
         cage = null;
         animalOnCage = null;
-        animalOnEgg = null;
+        animalOnEgg = new List<Animal>();
         
         if (animalsSleep.Count != 0)
         {
@@ -189,10 +204,7 @@ public class GameManager : MonoBehaviour
         animalsSleep.Add(animal);
     }
 
-    public void SetAnimalOnEgg(Animal animalOnEgg)
-    {
-        this.animalOnEgg = animalOnEgg;
-    }
+   
 
 
     public void SetAnimalOnCage(Animal animal)
@@ -244,7 +256,7 @@ public class GameManager : MonoBehaviour
             coroutineType1 = null;
         }
     }
-
+    
 
     private IEnumerator IeUpdateUserControlType1()
     {
@@ -271,8 +283,6 @@ public class GameManager : MonoBehaviour
         {
             generateTree.CloseTreeSpawned();
         }
-       
-        // generateTree.ClearTreeSpawned();
     }
 
     Coroutine coroutineCheckWin = null;
@@ -336,5 +346,10 @@ public class GameManager : MonoBehaviour
     {
         numberUndo--;
         SetTextUndo();
+    }
+
+    public void RemoveAnimalInlist(Animal animal)
+    {
+        animalOnEgg.Remove(animal);
     }
 }

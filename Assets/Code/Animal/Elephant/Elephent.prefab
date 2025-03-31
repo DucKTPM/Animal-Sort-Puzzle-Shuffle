@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f9e61435c61584baf27cc72d4f7673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameAnimal: 3
+  nameAnimal: 2
   animalRenderer: {fileID: 5206952054240770564}
   bomb: {fileID: 0}
   sleeping: 0

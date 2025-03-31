@@ -21,6 +21,12 @@ public class Tree : MonoBehaviour
     [SerializeField] private bool lockTree = false;
     [SerializeField] private GameObject treePrefab;
     [SerializeField] private Coin coin;
+    [SerializeField] private GameObject anchorSpawnCageTreeRight;
+    [SerializeField] private GameObject anchorSpawnCageTreeLeft;
+    
+    
+    public GameObject AnchorSpawnCageTreeRight=> anchorSpawnCageTreeRight;
+    public GameObject AnchorSpawnCageTreeLeft => anchorSpawnCageTreeLeft;
     public bool LockTree { get { return lockTree; } set { lockTree = value; } }
     public void SetCageTree(CageTree cageTree)
     {
@@ -380,15 +386,15 @@ public class Tree : MonoBehaviour
         }
         foreach (var animal in listAnimalOnTree)
         {
-            if (animal.KeyUnlock!=null&& GameManager.Instance.TypeEffectItem ==1)
+            if (animal.KeyUnlock!=null&& GameManager.Instance.TypeEffectItem ==2)
             {
-                GameManager.Instance.AnimalOnCage.UnlockCage();
+                //Debug.Log("Unlocked");
+               // GameManager.Instance.AnimalOnCage.UnlockCage();
                 animal.HideKey();
             }
 
             if (animal.Hammer != null)
             {
-                GameManager.Instance.AnimalOnEgg.BreakEgg();
                 animal.HideHammer();
             }
 
@@ -401,6 +407,7 @@ public class Tree : MonoBehaviour
             if (GameManager.Instance.TypeEffectItem == 5 && animal.KeyUnlock!=null)
             {
                 GameManager.Instance.RemoveKeyUnlock(animal.KeyUnlock);
+                animal.HideKey();
             }
         }
         GameView.Instance.ClearSteps();
@@ -473,7 +480,14 @@ public class Tree : MonoBehaviour
     public void UnlockTree()
     {
         lockTree = false;
-       cageTree.gameObject.SetActive(false);
+        StartCoroutine(IeWaitUnlockTree());
       
+    }
+
+    private IEnumerator IeWaitUnlockTree()
+    {
+        yield return new WaitForSeconds(1.5f);
+        
+        cageTree.gameObject.SetActive(false);
     }
 }

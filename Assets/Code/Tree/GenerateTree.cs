@@ -223,7 +223,7 @@ public class GenerateTree : MonoBehaviour
                 int indexStand = levelDataExtralConfig[j].positionData.indexStand;
                 int indexBird = levelDataExtralConfig[j].positionData.indexBird;
                 int extralValues = levelDataExtralConfig[j].extralValues[j]; // thoi gian , chim cam chia khoa
-
+                int extravalueHammer = levelDataExtralConfig[j].extralValues[0];
                 if (type == 1)
                 {
                     var animal = listTreeSpawned[indexStand]
@@ -238,6 +238,7 @@ public class GenerateTree : MonoBehaviour
                 }
                 else if (type == 2)
                 {
+                    gameManager.SetTypeEffectItem(type);
                     Debug.Log(indexStand);
                     var animal = listTreeSpawned[indexStand]
                         .AnimalsOnTree[listTreeSpawned[indexStand].AnimalsOnTree.Count - indexBird - 1];
@@ -254,6 +255,7 @@ public class GenerateTree : MonoBehaviour
                                 var obj = Instantiate(key, variaAnimal.transform.position, Quaternion.identity);
                                 obj.transform.parent = variaAnimal.transform;
                                 variaAnimal.SetKeyUnlocked(obj);
+                                obj.SetLock(cage.Lock);
                                 goto endLoop;
                             }
                         }
@@ -269,17 +271,18 @@ public class GenerateTree : MonoBehaviour
                     var egg = Instantiate(this.egg, animal.transform.position, Quaternion.identity);
                     egg.transform.parent = animal.transform;
                     animal.SetEgg(egg);
-                    gameManager.SetAnimalOnEgg(animal);
-
+                    GameManager.Instance.SetAnimalOnEgg(animal);
+                    Debug.Log(extralValues.ToString());
                     for (int i = 0; i < listTreeSpawned.Count; i++)
                     {
                         foreach (var variaAnimal in listTreeSpawned[i].AnimalsOnTree) //hammer
                         {
-                            if (variaAnimal.getNameAnimal() == extralValues.ToString())
+                            if (variaAnimal.getNameAnimal() == extravalueHammer.ToString())
                             {
                                 var obj = Instantiate(hammer, variaAnimal.transform.position, Quaternion.identity);
                                 obj.transform.parent = variaAnimal.transform;
                                 variaAnimal.SetHammer(obj);
+                                obj.SetEgg(egg);
                                 goto endLoop;
                             }
                         }
@@ -307,7 +310,17 @@ public class GenerateTree : MonoBehaviour
                 else if (type == 5)
                 {
                     var treeCage = listTreeSpawned[indexStand];
-                    var cageTree = Instantiate(this.cageTree, treeCage.transform.position, Quaternion.identity);
+                    var pos = Camera.main.WorldToViewportPoint(treeCage.transform.position);
+                    CageTree cageTree;
+                    if (pos.x> 0.5f)
+                    {
+                        cageTree = Instantiate(this.cageTree, treeCage.AnchorSpawnCageTreeRight.transform.position, Quaternion.identity);
+                    }
+                    else
+                    {
+                        cageTree = Instantiate(this.cageTree, treeCage.AnchorSpawnCageTreeLeft.transform.position, Quaternion.identity);
+                    }
+                   
                     cageTree.transform.parent = treeCage.transform;
                     treeCage.LockTree = true;
                     GameManager.Instance.SetTypeEffectItem(type);
@@ -339,12 +352,23 @@ public class GenerateTree : MonoBehaviour
                     {
                         if (count <= 1 && animalTemp.getNameAnimal() != animal.getNameAnimal())
                         {
+                          
                             var obj = Instantiate(key, animal.transform.position, Quaternion.identity);
                             obj.transform.parent = animal.transform;
                             gameManager.AddKeyUnlock(obj);
                             animal.SetKeyUnlocked(obj);
                             animalTemp = animal;
+                            if (count == 0)
+                            {
+                                obj.SetLock(cageTree.Lock1);
+                            }
+
+                            if (count == 1)
+                            {
+                                obj.SetLock(cageTree.Lock2);
+                            }
                             count++;
+                            
                         }
                     }
                     // foreach (var variaAnimal in treeCage.AnimalsOnTree)
