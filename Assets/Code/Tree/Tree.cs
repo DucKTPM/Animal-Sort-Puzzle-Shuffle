@@ -339,24 +339,23 @@ public class Tree : MonoBehaviour
             position.x = anchorSpawnAninmalRight.position.x;
         }
         lockTree = true;
+        var coppyList = new List<Animal>(listAnimalOnTree);
+        listAnimalOnTree.Clear();
         yield return new WaitForSecondsRealtime(1.5f);
-
         targetPosition = Camera.main.ViewportToWorldPoint(targetPosition);
         targetPosition.z = 0;
       
-        foreach (var animal in listAnimalOnTree)
+        foreach (var animal in coppyList)
         {
             animal.Jump(targetPosition, 0.3f, this);
             var coin = Instantiate(this.coin,animal.transform.position,Quaternion.identity);
         }
-        
-        yield return new WaitForSecondsRealtime(0.5f);
-     
-        foreach (var animal in listAnimalOnTree)
+        yield return new WaitForSecondsRealtime(1.5f);
+        foreach (var animal in coppyList)   
         {
             animal.gameObject.SetActive(false);
         }
-        listAnimalOnTree.Clear();
+        
         lockTree = false;
         GameManager.Instance.StartCheckWinGame();
     }

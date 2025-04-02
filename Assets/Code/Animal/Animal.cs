@@ -8,6 +8,8 @@ public class Animal : MonoBehaviour
     [SerializeField] private string nameAnimal;
     [SerializeField] private SpriteRenderer animalRenderer;
     [SerializeField] private Bomb bomb;
+    [SerializeField] private GameObject viewJump;
+    [SerializeField] private GameObject viewAnimal;
     public Bomb Bomb => bomb;
     [SerializeField] private bool sleeping = false;
     [SerializeField] Cage cage;
@@ -112,19 +114,45 @@ public class Animal : MonoBehaviour
 
     public void RemoveClickedAnimal()
     {
-        animator.SetTrigger("CancelClick");
+        if (animator!=null)
+        {
+            animator.SetTrigger("CancelClick");
+        }
+       
     }
 
     public void Jump(Vector3 endPosition, float h, Tree anchorTree)
+    {    
+        
+        gameObject.transform.SetParent(anchorTree.transform);
+        StartCoroutine(IeJump(transform.position, endPosition, h, anchorTree));
+    }
+
+    public void StarIEJumpOUt(Vector3 endPosition, float h, Tree anchorTree)
     {
+        StartCoroutine(JumpOut(endPosition, h, anchorTree));
+    }
+    public IEnumerator JumpOut(Vector3 endPosition, float h, Tree anchorTree)
+    {   yield return new WaitForSecondsRealtime(1.5f);
         gameObject.transform.SetParent(anchorTree.transform);
         StartCoroutine(IeJump(transform.position, endPosition, h, anchorTree));
     }
 
     private IEnumerator IeJump(Vector3 startPosition, Vector3 endPosition, float heightMultiplier, Tree anchorTree)
     {
+        viewJump.SetActive(true);
+        var viewEndPostion = Camera.main.WorldToViewportPoint(endPosition);
+        if (viewEndPostion.x < 0.5f)
+        {
+            viewJump.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+        }
+        else 
+        {
+            viewJump.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+        }
+        viewAnimal.SetActive(false);
         float elapsedTime = 0f;
-        float duration = 1f;
+        float duration = 0.8f;// time nhảy
         float maxHeight = Vector3.Distance(startPosition, endPosition) * heightMultiplier; // Độ cao tối đa
 
         while (elapsedTime < duration)
@@ -141,8 +169,9 @@ public class Animal : MonoBehaviour
             transform.position = position;
             yield return null;
         }
-
-        transform.position = endPosition; // Đảm bảo đặt đúng vị trí kết thúc
+        viewJump.SetActive(false);
+        viewAnimal.SetActive(true);
+        transform.position = endPosition;
         anchorTree.ShakeTree();
     }
 

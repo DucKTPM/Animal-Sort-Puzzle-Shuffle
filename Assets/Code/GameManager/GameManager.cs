@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,10 +16,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private MenuWinGame menuWinGame;
     [SerializeField] private int addTrees = 0;
     [SerializeField] private TextMeshProUGUI textAddTrees;
+    [SerializeField] private Image imgaeAddTrees;
     [SerializeField] private TextMeshProUGUI textUndo;
+    [SerializeField] private Image imgaeUndo;
     [SerializeField] private int numberUndo = 0;
     [SerializeField] private int nextLevel = 0;
     [SerializeField] private TextMeshProUGUI textNextLevel;
+    [SerializeField] private Image imgaeNextLevel;
     [SerializeField] private MenuWinGame menuGameOver;
     public GameObject totalPanel;
 
@@ -33,23 +37,29 @@ public class GameManager : MonoBehaviour
     public int NumberUndo => numberUndo;
         
     public int NextLevel => nextLevel;
-
+    bool flagCheckNextLevel = false;
     public void NextLevelUp()
     {
-        if (nextLevel>0)
+        if (nextLevel>0 && flagCheckNextLevel == false)
         {
             stateGame = false;
             nextLevel--;
-           
+            flagCheckNextLevel = true;
+            if (nextLevel < 0||flagCheckNextLevel==true)
+            {
+                Color color = imgaeNextLevel.color;
+                color.a = 130/255f;
+                imgaeNextLevel.color = color;
+                Color colort = textNextLevel.color;
+                colort.a = 130/255f;
+                textNextLevel.color = color;
+            }
             
         }
    
     }
 
-    public void DeletAnimalOnEgg()
-    {
-        
-    }
+
 
     public void SetTextCoin()
     {
@@ -61,16 +71,83 @@ public class GameManager : MonoBehaviour
         textNextLevel.text = nextLevel.ToString();
     }
     
-
+    bool flagCheckAddTrees = false;
     public void AddTreeOnScene()
     {
-        if (addTrees >0)
+        if (addTrees >0 && flagCheckAddTrees==false)
         {
             generateTree.AddTree();
             addTrees--;
+            Color color = imgaeAddTrees.color;
+            color.a = 130f/255f;
+            imgaeAddTrees.color = color;
+            Color colort = textAddTrees.color;
+            textAddTrees.color = color;
+            colort.a = 130f/255f;
             SetTextAddTree();
+            flagCheckAddTrees = true;
         }
     }
+
+    public void SetUpImageButton()
+    {
+        if (addTrees>0)
+        {
+            flagCheckAddTrees = false;
+            Color color1 = imgaeAddTrees.color;
+            color1.a = 1; 
+            imgaeAddTrees.color = color1;
+            Color color = textAddTrees.color;
+            color.a = 1;
+            textAddTrees.color = color;
+        }
+
+        if (numberUndo >0)
+        {
+            flagCheckAddTrees = false;
+            SetInvisibleUndo();
+            
+            
+        }
+
+        if (nextLevel > 0)
+        {  flagCheckNextLevel = false;
+            Color color3= imgaeNextLevel.color;
+            color3.a = 255;
+            imgaeNextLevel.color = color3;
+            Color color = textNextLevel.color;
+            color.a = 255;
+            textNextLevel.color = color;
+        }
+
+        StartCoroutine(IeUndo());
+
+
+    }
+   
+    bool flagCheckUndo = false;
+    private IEnumerator IeUndo()
+    {
+        while (true)
+        {
+            yield return new WaitUntil(() => gameView.Steps.Count > 0);
+            SetUnInvisibleUndo();
+            yield return new WaitUntil(() => gameView.Steps.Count ==0);
+            SetInvisibleUndo();
+        }
+    }
+
+    private void SetUnInvisibleUndo()
+    {
+        Color color2= imgaeUndo.color;
+        color2.a = 1;
+        imgaeUndo.color = color2;
+        
+        Color color = textUndo.color;
+        color.a = 1;
+        textUndo.color = color;
+    }
+
     public bool StateGame
     {
         get => stateGame;
@@ -120,11 +197,16 @@ public class GameManager : MonoBehaviour
 
   
     private Coroutine coroutineRestart = null;
-
+    
     public void RestartGame()
     {
-        if (coroutineRestart == null)
+        if (coroutineRestart == null && stateGame==true)
         {
+            if (gameView.StateClickedTree == true)
+            {
+                gameView.AnimalsCancelClicked();
+            }
+            
             ClearLevelPlay();
             coroutineRestart = StartCoroutine(IeRestartGame());
         }
@@ -170,7 +252,9 @@ public class GameManager : MonoBehaviour
         SetTextCoin();
     }
     private void Setup()
-    {   SetTextNextLevel();
+    { 
+        SetUpImageButton();
+        SetTextNextLevel();
         SetTextAddTree();
         menuWinGame.Hide();
         levelPopup.SetTextLevelPopup(levelDataManager.CurrentLevelIndex.ToString());
@@ -257,7 +341,7 @@ public class GameManager : MonoBehaviour
         }
     }
     
-
+    
     private IEnumerator IeUpdateUserControlType1()
     {
         yield return new WaitUntil(() => valueTimeBomb <= 0);
@@ -268,12 +352,17 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         menuGameOver.Show();
     }
-
+    
     private IEnumerator StartWaitWinGame()
     {
         yield return new WaitUntil(() => stateGame == false);
-        ClearLevelPlay();
+        if (flagCheckNextLevel == false)
+        {
+            yield return new WaitForSeconds(1.5f);
+        }
+        
         levelDataManager.NextLevelIndex();
+        ClearLevelPlay();
         menuWinGame.Show();
     }
 
@@ -304,6 +393,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitUntil(() => CheckWin(generateTree.ListTreeSpawned));
         stateGame = false;
+     
     }
 
     public bool CheckWin(List<Tree> listTreeSpawn)
@@ -315,8 +405,6 @@ public class GameManager : MonoBehaviour
                 return false;
             }
         }
-
-        stateGame = false;
         return true;
     }
 
@@ -346,10 +434,21 @@ public class GameManager : MonoBehaviour
     {
         numberUndo--;
         SetTextUndo();
+        if (numberUndo<=0)
+        {
+           SetInvisibleUndo();
+        }
     }
 
-    public void RemoveAnimalInlist(Animal animal)
+    public void SetInvisibleUndo()
     {
-        animalOnEgg.Remove(animal);
+        Color color1 = imgaeUndo.color;
+        color1.a = 130/255f;
+        imgaeUndo.color = color1;
+        Color color = textUndo.color;
+        color.a = 130/255f;
+        textUndo.color = color;
     }
+    
+   
 }

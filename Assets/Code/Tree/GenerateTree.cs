@@ -1,9 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TreeEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class GenerateTree : MonoBehaviour
 {
@@ -21,14 +19,7 @@ public class GenerateTree : MonoBehaviour
     [SerializeField] private CageTree cageTree;
     public List<GameObject> ListTypeObstacles => listTypeObstacles;
     public List<Tree> ListTreeSpawned => listTreeSpawned;
-
-    public void ClearTreeSpawned()
-    {
-        for (int i = 0; i < listTreeSpawned.Count; i++)
-        {
-            Destroy(listTreeSpawned[i].gameObject);
-        }
-    }
+    
 
     public void StartGenerateTree(LevelData levelData)
     {

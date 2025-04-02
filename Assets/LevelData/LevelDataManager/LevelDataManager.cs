@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 
 public class LevelDataManager : MonoBehaviour
 {
+    [SerializeField] private List<TextAsset> levelDataList;
     private int currentLevelIndex
     {
         get=>PlayerPrefs.GetInt("currentLevelIndex",50);
@@ -29,7 +30,11 @@ public class LevelDataManager : MonoBehaviour
 
     public LevelData ReadLevelData()
     {
-        string path = Path.Combine(Application.dataPath,"LevelData", "Level_"+currentLevelIndex+".json");
+        /**
+        // Application.persistentDataPath; <= Dùng cái này chứ k dc dùng Application.dataPath
+        //Mà load json như này k được. Build sẽ lỗi ngay
+        string path = Path.Combine(Application.dataPath,"LevelData", "Level_"+currentLevelIndex+".json");//BUG=>
+        
         LevelData levelData = new LevelData();
         if (File.Exists(path))
         {
@@ -51,7 +56,9 @@ public class LevelDataManager : MonoBehaviour
         else
         {
             Debug.Log($"No level data found"+ path);
-        }
+        }**/
+        var levelStringData = levelDataList[currentLevelIndex%levelDataList.Count].text;
+        var levelData= JsonUtility.FromJson<LevelData>(levelStringData);
         return levelData;
         
     }
