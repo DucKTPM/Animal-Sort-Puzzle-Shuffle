@@ -11,7 +11,7 @@ public class LevelDataManager : MonoBehaviour
     [SerializeField] private List<TextAsset> levelDataList;
     private int currentLevelIndex
     {
-        get=>PlayerPrefs.GetInt("currentLevelIndex",50);
+        get=>PlayerPrefs.GetInt("currentLevelIndex",30);
         set{PlayerPrefs.SetInt("currentLevelIndex",value);}
         
     }

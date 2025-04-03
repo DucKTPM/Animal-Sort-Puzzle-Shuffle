@@ -12,7 +12,7 @@ public class KeyUnlock : MonoBehaviour
     }
 
     private IEnumerator IeEffectHideKey()
-    {
+    {  
         transform.parent = null;
         while (Vector3.Distance(cage.transform.position, transform.position) > 0.1f)
         {
@@ -20,10 +20,10 @@ public class KeyUnlock : MonoBehaviour
             yield return null;
         }
         yield return new WaitForSeconds(1f);
-         
         gameObject.SetActive(false);
-        if (GameManager.Instance.TypeEffectItem == 1)
+        if (GameManager.Instance.TypeEffectItem == 2)
         {
+         
             GameManager.Instance.AnimalOnCage.UnlockCage();
         }
         else

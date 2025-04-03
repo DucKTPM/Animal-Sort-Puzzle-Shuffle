@@ -189,7 +189,7 @@ public class Animal : MonoBehaviour
     public void WakeUp()
     {
         sleeping = false;
-      //  RemoveClickedAnimal();
+        RemoveClickedAnimal();
     }
 
     public void HideClock()
