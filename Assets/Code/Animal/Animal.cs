@@ -122,10 +122,13 @@ public class Animal : MonoBehaviour
     }
 
     public void Jump(Vector3 endPosition, float h, Tree anchorTree)
-    {    
-        
-        gameObject.transform.SetParent(anchorTree.transform);
-        StartCoroutine(IeJump(transform.position, endPosition, h, anchorTree));
+    {
+        if (gameObject!=null)
+        {
+            gameObject.transform.SetParent(anchorTree.transform);
+            StartCoroutine(IeJump(transform.position, endPosition, h, anchorTree));
+        }
+      
     }
 
     public void StarIEJumpOUt(Vector3 endPosition, float h, Tree anchorTree)

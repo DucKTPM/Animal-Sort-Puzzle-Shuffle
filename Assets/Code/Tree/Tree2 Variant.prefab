@@ -73,7 +73,7 @@ PrefabInstance:
     - target: {fileID: 1009765199912771505, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: c31f853b69b268a4a9094df46117af2b, type: 3}
+      objectReference: {fileID: 21300000, guid: cd32e0f0b9c460442b3b1b23a6199c90, type: 3}
     - target: {fileID: 1009765199912771505, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -88,7 +88,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1313837008692278120, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.086
+      value: 0.078
       objectReference: {fileID: 0}
     - target: {fileID: 1482358594780742971, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
       propertyPath: coin
@@ -104,7 +104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1482358594780742971, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
       propertyPath: animals.Array.size
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1482358594780742971, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
       propertyPath: anchorSpawnCageTree
@@ -144,6 +144,10 @@ PrefabInstance:
       objectReference: {fileID: -3332961166696669473, guid: c2e633e5c43958f45a60c8bd9971f528, type: 3}
     - target: {fileID: 1482358594780742971, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
       propertyPath: animals.Array.data[8]
+      value: 
+      objectReference: {fileID: 4873044086198518127, guid: 095ee7255e2834e4c9426db21b3cb3e0, type: 3}
+    - target: {fileID: 1482358594780742971, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
+      propertyPath: animals.Array.data[9]
       value: 
       objectReference: {fileID: 4873044086198518127, guid: 095ee7255e2834e4c9426db21b3cb3e0, type: 3}
     - target: {fileID: 1482358594780742971, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
@@ -224,11 +228,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6087646215298411962, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 6087646215298411962, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 0.09
       objectReference: {fileID: 0}
     - target: {fileID: 6087646215298411962, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
       propertyPath: m_LocalScale.z

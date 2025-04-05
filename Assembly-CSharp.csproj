@@ -54,6 +54,7 @@
     <Compile Include="Assets\Code\Obstacle\Bomb\Bomb.cs" />
     <Compile Include="Assets\Code\Popup\Level\LevelPopup.cs" />
     <Compile Include="Assets\Code\GamView\GameView.cs" />
+    <Compile Include="Assets\Code\Audio\AudioManager.cs" />
     <Compile Include="Assets\Code\Tree\Tree.cs" />
     <Compile Include="Assets\Code\Popup\MenuWinGame\MenuWinGame.cs" />
     <Compile Include="Assets\Code\Obstacle\Type2\Lock.cs" />

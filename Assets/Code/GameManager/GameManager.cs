@@ -202,11 +202,7 @@ public class GameManager : MonoBehaviour
     {
         if (coroutineRestart == null && stateGame==true)
         {
-            if (gameView.StateClickedTree == true)
-            {
-                gameView.AnimalsCancelClicked();
-            }
-            
+            gameView.AnimalsCancelClicked();
             ClearLevelPlay();
             coroutineRestart = StartCoroutine(IeRestartGame());
         }
@@ -252,7 +248,7 @@ public class GameManager : MonoBehaviour
         SetTextCoin();
     }
     private void Setup()
-    { 
+    {   gameView.AnimalsCancelClicked();
         SetUpImageButton();
         SetTextNextLevel();
         SetTextAddTree();

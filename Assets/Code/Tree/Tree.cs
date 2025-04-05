@@ -60,12 +60,14 @@ public class Tree : MonoBehaviour
         {
             space = 0.4f;
         }
-
+        
         if (slot == 6)
         {
             space = 0.3f;
         }
     }
+
+
 
     public void StartSpawnAnimalOnTree(int[] idAnimals)
     {
@@ -85,8 +87,8 @@ public class Tree : MonoBehaviour
         }
         else if (viewPostion.x > 0.5f)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 180f);
-            boxCollider2D.offset = new Vector2(1f, -boxCollider2D.offset.y);
+            transform.rotation = Quaternion.Euler(180f, 0, 180f);
+            boxCollider2D.offset = new Vector2(1f, 0.3f);
             position = anchorSpawnAninmalRight.position;
         }
 
