@@ -171,7 +171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7595413430563298066, guid: f503145748bde8248a535f8d3a83247f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: f503145748bde8248a535f8d3a83247f, type: 3}
       propertyPath: m_LocalScale.x
@@ -223,7 +223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7519722154212866590, guid: f503145748bde8248a535f8d3a83247f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7403552082353693539, guid: f503145748bde8248a535f8d3a83247f, type: 3}
       propertyPath: m_IsActive
@@ -248,6 +248,10 @@ PrefabInstance:
     - target: {fileID: -7221020487405985688, guid: f503145748bde8248a535f8d3a83247f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 6.718
+      objectReference: {fileID: 0}
+    - target: {fileID: -3490127619965925271, guid: f503145748bde8248a535f8d3a83247f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3351868363131983666, guid: f503145748bde8248a535f8d3a83247f, type: 3}
       propertyPath: m_IsActive
@@ -275,7 +279,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -856138430712955627, guid: f503145748bde8248a535f8d3a83247f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -469542070303478727, guid: f503145748bde8248a535f8d3a83247f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 558580837604631819, guid: f503145748bde8248a535f8d3a83247f, type: 3}
       propertyPath: m_IsActive
@@ -307,7 +315,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7751269498262281042, guid: f503145748bde8248a535f8d3a83247f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

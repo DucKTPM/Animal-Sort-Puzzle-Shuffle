@@ -131,12 +131,13 @@ public class Animal : MonoBehaviour
       
     }
 
-    public void StarIEJumpOUt(Vector3 endPosition, float h, Tree anchorTree)
+    public void SetAnimationSmile()
     {
-        StartCoroutine(JumpOut(endPosition, h, anchorTree));
+        animator.SetTrigger("Smile");
     }
-    public IEnumerator JumpOut(Vector3 endPosition, float h, Tree anchorTree)
-    {   yield return new WaitForSecondsRealtime(1.5f);
+    
+    public void JumpOut(Vector3 endPosition, float h, Tree anchorTree)
+    {   
         gameObject.transform.SetParent(anchorTree.transform);
         StartCoroutine(IeJump(transform.position, endPosition, h, anchorTree));
     }
@@ -180,9 +181,10 @@ public class Animal : MonoBehaviour
 
     public void Sleep()
     {
-        sleeping = true;
-        Click();
+        sleeping = true; 
+        animator.SetTrigger("Sleep");
     }
+    
 
     public void SetSleep(bool b)
     {
@@ -192,8 +194,9 @@ public class Animal : MonoBehaviour
     public void WakeUp()
     {
         sleeping = false;
-        RemoveClickedAnimal();
+       animator.SetTrigger("CancelSleep");
     }
+    
 
     public void HideClock()
     {

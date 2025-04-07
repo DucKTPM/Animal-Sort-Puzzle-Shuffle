@@ -24,7 +24,7 @@ public class Tree : MonoBehaviour
     [SerializeField] private GameObject anchorSpawnCageTreeRight;
     [SerializeField] private GameObject anchorSpawnCageTreeLeft;
     
-    
+    public List<Animal> ListAnimalOnTree { get => listAnimalOnTree; set => listAnimalOnTree = value; }
     public GameObject AnchorSpawnCageTreeRight=> anchorSpawnCageTreeRight;
     public GameObject AnchorSpawnCageTreeLeft => anchorSpawnCageTreeLeft;
     public bool LockTree { get { return lockTree; } set { lockTree = value; } }
@@ -198,31 +198,41 @@ public class Tree : MonoBehaviour
 
     
     private void MoveAnimalsTreeEmptys()
-    {   
+    {
             var checkSideViewPos = Camera.main.WorldToViewportPoint(transform.position);
             var listAnimalsMove = GameView.Instance.GetAnimalsClicked();
-            for (int i = 0; i <listAnimalsMove.Count; i++)
-            {
-                AnimalsOnTree.Add(listAnimalsMove[i]);
-                listAnimalsMove[i].Jump(position,0.5f,this);
-                if (checkSideViewPos.x <= 0.5f)
-                {
-                    position.x += space;
-                }
-                else
-                {
-                    position.x -= space;
-                }
-                GameView.Instance.RemoveAnimalOnTreeClicked(listAnimalsMove[i]);
-                
-                
-            }
-            if (CheckEnoghAnimalOnTree()!= true)
-            {
-                AddStepToList(listAnimalsMove,GameView.Instance.GetTree(),this);
-            }
-            GameManager.Instance.AnimalJump();
+            StartCoroutine(IeMoveAnimalsEmpty(checkSideViewPos, listAnimalsMove));
+           
+        
+    }
 
+    private IEnumerator IeMoveAnimalsEmpty(Vector3 checkSideViewPos, List<Animal> listAnimalsMove)
+    {
+        lockTree = true;
+        for (int i = 0; i <listAnimalsMove.Count; i++)
+        {
+            AnimalsOnTree.Add(listAnimalsMove[i]);
+            listAnimalsMove[i].Jump(position,0.5f,this);
+            if (checkSideViewPos.x <= 0.5f)
+            {
+                position.x += space;
+            }
+            else
+            {
+                position.x -= space;
+            }
+            GameView.Instance.RemoveAnimalOnTreeClicked(listAnimalsMove[i]);
+                
+                
+        }
+        if (CheckEnoghAnimalOnTree()!= true)
+        {
+            AddStepToList(listAnimalsMove,GameView.Instance.GetTree(),this);
+        }
+        GameManager.Instance.AnimalJump();
+        yield return new WaitForSeconds(0.9f);
+        lockTree = false;
+       
     }
 
     private void AddStepToList(List<Animal> animals,Tree treeStart,Tree treeEnd)
@@ -236,13 +246,22 @@ public class Tree : MonoBehaviour
     {
         this.position = position;
     }
+
+
     private void MoveAnimals()
-    {
+    {   
         var checkSideViewPos = Camera.main.WorldToViewportPoint(transform.position);
         var listAnimalsMove = GameView.Instance.GetAnimalsClicked();
         int countToMove = Mathf.Min(slot - listAnimalOnTree.Count, listAnimalsMove.Count);
         if (countToMove <= 0) return;
+        StartCoroutine(IeMoveAnimail(checkSideViewPos,listAnimalsMove,countToMove));
+       
+        
+    }
 
+    private IEnumerator IeMoveAnimail(Vector3 checkSideViewPos, List<Animal> listAnimalsMove, int countToMove)
+    {
+        lockTree=true;
         for (int i = 0; i < countToMove; i++)
         {
             AnimalsOnTree.Add(listAnimalsMove[i]);
@@ -259,14 +278,15 @@ public class Tree : MonoBehaviour
 
             position = newPosition;
             GameView.Instance.RemoveAnimalOnTreeClicked(listAnimalsMove[i]);
-        }
+        } 
 
         if (CheckEnoghAnimalOnTree()!= true)
         {
             AddStepToList(listAnimalsMove,GameView.Instance.GetTree(),this);
         }
-       
         GameManager.Instance.AnimalJump();
+        yield return new WaitForSeconds(0.9f);
+        lockTree = false;
     }
 
     private void OnMouseDown()
@@ -329,6 +349,7 @@ public class Tree : MonoBehaviour
 
     private IEnumerator JumpOut()
     {
+       
         var targetPosition = Camera.main.WorldToViewportPoint(transform.position);
         if (targetPosition.x > 0.5f)
         {
@@ -344,11 +365,16 @@ public class Tree : MonoBehaviour
         var coppyList = new List<Animal>(listAnimalOnTree);
         listAnimalOnTree.Clear();
         yield return new WaitForSecondsRealtime(1.5f);
+        foreach (var animal in coppyList)
+        {
+            animal.SetAnimationSmile();
+        }
         targetPosition = Camera.main.ViewportToWorldPoint(targetPosition);
         targetPosition.z = 0;
       
         foreach (var animal in coppyList)
         {
+            
             animal.Jump(targetPosition, 0.3f, this);
             var coin = Instantiate(this.coin,animal.transform.position,Quaternion.identity);
         }

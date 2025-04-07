@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5f9e61435c61584baf27cc72d4f7673, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameAnimal: 8
+  nameAnimal: 9
   animalRenderer: {fileID: 7719529562228220642}
   bomb: {fileID: 0}
   viewJump: {fileID: 5952658850051615929}
@@ -169,6 +169,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7595413430563298066, guid: 09b30145a0b27e449971dd90858d072d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 09b30145a0b27e449971dd90858d072d, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.15
@@ -215,6 +219,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 09b30145a0b27e449971dd90858d072d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -856138430712955627, guid: 09b30145a0b27e449971dd90858d072d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 558580837604631819, guid: 09b30145a0b27e449971dd90858d072d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3802535661894636383, guid: 09b30145a0b27e449971dd90858d072d, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

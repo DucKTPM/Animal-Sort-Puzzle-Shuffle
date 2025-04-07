@@ -24,41 +24,38 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textNextLevel;
     [SerializeField] private Image imgaeNextLevel;
     [SerializeField] private MenuWinGame menuGameOver;
-    public GameObject totalPanel;
-
-    [SerializeField]
-    private int numberCoin
-    {
-        get=>PlayerPrefs.GetInt("numberCoin",0);
-        set=>PlayerPrefs.SetInt("numberCoin",value);
-    }
     [SerializeField] private TextMeshProUGUI textCoin;
-    
+    [SerializeField] private List<Animal> listAnimals;
     public int NumberUndo => numberUndo;
-        
     public int NextLevel => nextLevel;
     bool flagCheckNextLevel = false;
+
+    public GameObject totalPanel;
+
+    private int numberCoin
+    {
+        get => PlayerPrefs.GetInt("numberCoin", 0);
+        set => PlayerPrefs.SetInt("numberCoin", value);
+    }
+    
     public void NextLevelUp()
     {
-        if (nextLevel>0 && flagCheckNextLevel == false)
+        if (nextLevel > 0 && flagCheckNextLevel == false)
         {
             stateGame = false;
             nextLevel--;
             flagCheckNextLevel = true;
-            if (nextLevel < 0||flagCheckNextLevel==true)
+            if (nextLevel < 0 || flagCheckNextLevel == true)
             {
                 Color color = imgaeNextLevel.color;
-                color.a = 130/255f;
+                color.a = 130 / 255f;
                 imgaeNextLevel.color = color;
                 Color colort = textNextLevel.color;
-                colort.a = 130/255f;
+                colort.a = 130 / 255f;
                 textNextLevel.color = color;
             }
-            
         }
-   
     }
-
 
 
     public void SetTextCoin()
@@ -70,20 +67,21 @@ public class GameManager : MonoBehaviour
     {
         textNextLevel.text = nextLevel.ToString();
     }
-    
+
     bool flagCheckAddTrees = false;
+
     public void AddTreeOnScene()
     {
-        if (addTrees >0 && flagCheckAddTrees==false)
+        if (addTrees > 0 && flagCheckAddTrees == false && stateGame == true)
         {
             generateTree.AddTree();
             addTrees--;
             Color color = imgaeAddTrees.color;
-            color.a = 130f/255f;
+            color.a = 130f / 255f;
             imgaeAddTrees.color = color;
             Color colort = textAddTrees.color;
             textAddTrees.color = color;
-            colort.a = 130f/255f;
+            colort.a = 130f / 255f;
             SetTextAddTree();
             flagCheckAddTrees = true;
         }
@@ -91,28 +89,27 @@ public class GameManager : MonoBehaviour
 
     public void SetUpImageButton()
     {
-        if (addTrees>0)
+        if (addTrees > 0)
         {
             flagCheckAddTrees = false;
             Color color1 = imgaeAddTrees.color;
-            color1.a = 1; 
+            color1.a = 1;
             imgaeAddTrees.color = color1;
             Color color = textAddTrees.color;
             color.a = 1;
             textAddTrees.color = color;
         }
 
-        if (numberUndo >0)
+        if (numberUndo > 0)
         {
             flagCheckAddTrees = false;
             SetInvisibleUndo();
-            
-            
         }
 
         if (nextLevel > 0)
-        {  flagCheckNextLevel = false;
-            Color color3= imgaeNextLevel.color;
+        {
+            flagCheckNextLevel = false;
+            Color color3 = imgaeNextLevel.color;
             color3.a = 255;
             imgaeNextLevel.color = color3;
             Color color = textNextLevel.color;
@@ -121,28 +118,27 @@ public class GameManager : MonoBehaviour
         }
 
         StartCoroutine(IeUndo());
-
-
     }
-   
+
     bool flagCheckUndo = false;
+
     private IEnumerator IeUndo()
     {
         while (true)
         {
             yield return new WaitUntil(() => gameView.Steps.Count > 0);
             SetUnInvisibleUndo();
-            yield return new WaitUntil(() => gameView.Steps.Count ==0);
+            yield return new WaitUntil(() => gameView.Steps.Count == 0);
             SetInvisibleUndo();
         }
     }
 
     private void SetUnInvisibleUndo()
     {
-        Color color2= imgaeUndo.color;
+        Color color2 = imgaeUndo.color;
         color2.a = 1;
         imgaeUndo.color = color2;
-        
+
         Color color = textUndo.color;
         color.a = 1;
         textUndo.color = color;
@@ -173,6 +169,7 @@ public class GameManager : MonoBehaviour
     private int typeEffectItem = 0;
 
     private List<Animal> animalOnEgg;
+
     public void SetAnimalOnEgg(Animal animal)
     {
         if (animalOnEgg == null)
@@ -180,10 +177,12 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Animal is null! Cannot add to list.");
             return;
         }
+
         animalOnEgg.Add(animal);
     }
+
     private Tree treeLock;
-    
+
 
     public Tree TreeLock
     {
@@ -195,24 +194,24 @@ public class GameManager : MonoBehaviour
     private List<Animal> animalsSleep = new List<Animal>();
     public List<Animal> AnimalsSleep => animalsSleep;
 
-  
+
     private Coroutine coroutineRestart = null;
-    
+
     public void RestartGame()
     {
-        if (coroutineRestart == null && stateGame==true)
+        if (coroutineRestart == null && stateGame == true)
         {
+            stateGame = false;
             gameView.AnimalsCancelClicked();
             ClearLevelPlay();
             coroutineRestart = StartCoroutine(IeRestartGame());
         }
-          
     }
 
     public void RestartGameOver()
     {
         menuGameOver.Hide();
-       StartGame();
+        StartGame();
     }
 
     private IEnumerator IeRestartGame()
@@ -224,7 +223,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void StartGame()
-    {   
+    {
         Setup();
         LevelData levelData = levelDataManager.ReadLevelData();
         gameView.StartGenerateMapLevel(levelData);
@@ -238,8 +237,10 @@ public class GameManager : MonoBehaviour
             StopCoroutine(croutineWaitWinGame);
             croutineWaitWinGame = null;
         }
-        croutineWaitWinGame =  StartCoroutine(StartWaitWinGame());
+
+        croutineWaitWinGame = StartCoroutine(StartWaitWinGame());
     }
+
     private Coroutine croutineWaitWinGame = null;
 
     public void AddCoin(int coin)
@@ -247,8 +248,10 @@ public class GameManager : MonoBehaviour
         this.numberCoin += coin;
         SetTextCoin();
     }
+
     private void Setup()
-    {   gameView.AnimalsCancelClicked();
+    {
+        gameView.AnimalsCancelClicked();
         SetUpImageButton();
         SetTextNextLevel();
         SetTextAddTree();
@@ -262,7 +265,7 @@ public class GameManager : MonoBehaviour
         cage = null;
         animalOnCage = null;
         animalOnEgg = new List<Animal>();
-        
+
         if (animalsSleep.Count != 0)
         {
             animalsSleep.Clear();
@@ -283,8 +286,6 @@ public class GameManager : MonoBehaviour
     {
         animalsSleep.Add(animal);
     }
-
-   
 
 
     public void SetAnimalOnCage(Animal animal)
@@ -336,19 +337,19 @@ public class GameManager : MonoBehaviour
             coroutineType1 = null;
         }
     }
-    
-    
+
+
     private IEnumerator IeUpdateUserControlType1()
     {
         yield return new WaitUntil(() => valueTimeBomb <= 0);
         bomb.SetEffectBum();
-        
+
         yield return new WaitForSeconds(1f);
         ClearLevelPlay();
         yield return new WaitForSeconds(1f);
         menuGameOver.Show();
     }
-    
+
     private IEnumerator StartWaitWinGame()
     {
         yield return new WaitUntil(() => stateGame == false);
@@ -356,15 +357,19 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(1.5f);
         }
-        
+
         levelDataManager.NextLevelIndex();
+      var dataAnimal = levelDataManager.ReadLevelData();
+      int indexAnimal =  dataAnimal.standConfig[0].idBirds[0];
+      menuWinGame.SpawnAnimal(indexAnimal);
         ClearLevelPlay();
+        
         menuWinGame.Show();
     }
 
     private void ClearLevelPlay()
     {
-        if (generateTree.ListTreeSpawned!=null)
+        if (generateTree.ListTreeSpawned != null)
         {
             generateTree.CloseTreeSpawned();
         }
@@ -389,7 +394,6 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitUntil(() => CheckWin(generateTree.ListTreeSpawned));
         stateGame = false;
-     
     }
 
     public bool CheckWin(List<Tree> listTreeSpawn)
@@ -401,6 +405,7 @@ public class GameManager : MonoBehaviour
                 return false;
             }
         }
+
         return true;
     }
 
@@ -430,21 +435,19 @@ public class GameManager : MonoBehaviour
     {
         numberUndo--;
         SetTextUndo();
-        if (numberUndo<=0)
+        if (numberUndo <= 0)
         {
-           SetInvisibleUndo();
+            SetInvisibleUndo();
         }
     }
 
     public void SetInvisibleUndo()
     {
         Color color1 = imgaeUndo.color;
-        color1.a = 130/255f;
+        color1.a = 130 / 255f;
         imgaeUndo.color = color1;
         Color color = textUndo.color;
-        color.a = 130/255f;
+        color.a = 130 / 255f;
         textUndo.color = color;
     }
-    
-   
 }

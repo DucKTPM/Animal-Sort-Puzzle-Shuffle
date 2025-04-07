@@ -9,7 +9,6 @@ public class GenerateTree : MonoBehaviour
     [SerializeField] private List<Tree> listTreeSpawned = new List<Tree>();
     [SerializeField] private GameManager gameManager;
     [SerializeField] private List<GameObject> listTypeObstacles = new List<GameObject>();
-    [SerializeField] private List<GameObject> listItemObstacles = new List<GameObject>();
     [SerializeField] private Bomb bomb;
     [SerializeField] private KeyUnlock key;
     [SerializeField] private Cage cage;
@@ -17,7 +16,6 @@ public class GenerateTree : MonoBehaviour
     [SerializeField] private Hammer hammer;
     [SerializeField] private Clock clock;
     [SerializeField] private CageTree cageTree;
-    public List<GameObject> ListTypeObstacles => listTypeObstacles;
     public List<Tree> ListTreeSpawned => listTreeSpawned;
     
 
