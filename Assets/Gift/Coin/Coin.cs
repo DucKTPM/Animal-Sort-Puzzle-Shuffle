@@ -14,9 +14,18 @@ public class Coin : MonoBehaviour
    {
       StartCoroutine(MoveToTotalCoin());
    }
+   public float angle = 15f;        
+   public float speed = 15f;        
+   private float t = 0f;
 
-   private IEnumerator MoveToTotalCoin()
+   void Update()
    {
+      t += Time.deltaTime * speed;
+      float rotationZ = Mathf.Sin(t) * angle;
+      transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
+   } 
+   private IEnumerator MoveToTotalCoin()
+   {  
       yield return new WaitForSeconds(0.5f);
       Vector3 anchorGameManager = GameManager.Instance.totalPanel.transform.position;
       while (Vector3.Distance(transform.position, anchorGameManager) > 0.1f)
