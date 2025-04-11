@@ -37,7 +37,11 @@ public class GameManager : MonoBehaviour
     private int numberCoin
     {
         get => PlayerPrefs.GetInt("numberCoin", 0);
-        set => PlayerPrefs.SetInt("numberCoin", value);
+        set
+        {
+            PlayerPrefs.SetInt("numberCoin", value);
+            PlayerPrefs.Save();
+        }
     }
 
     public void NextLevelUp()

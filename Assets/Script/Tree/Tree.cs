@@ -209,7 +209,7 @@ public class Tree : MonoBehaviour
 
     private IEnumerator IeMoveAnimalsEmpty(Vector3 checkSideViewPos, List<Animal> listAnimalsMove)
     {
-        lockTree = true;
+       // lockTree = true;
         for (int i = 0; i <listAnimalsMove.Count; i++)
         {
             AnimalsOnTree.Add(listAnimalsMove[i]);
@@ -232,7 +232,7 @@ public class Tree : MonoBehaviour
         }
         GameManager.Instance.AnimalJump();
         yield return new WaitForSeconds(0.9f);
-        lockTree = false;
+       // lockTree = false;
        
     }
 
@@ -262,7 +262,7 @@ public class Tree : MonoBehaviour
 
     private IEnumerator IeMoveAnimail(Vector3 checkSideViewPos, List<Animal> listAnimalsMove, int countToMove)
     {
-        lockTree=true;
+      //  lockTree=true;
         for (int i = 0; i < countToMove; i++)
         {
             AnimalsOnTree.Add(listAnimalsMove[i]);
@@ -287,7 +287,7 @@ public class Tree : MonoBehaviour
         }
         GameManager.Instance.AnimalJump();
         yield return new WaitForSeconds(0.9f);
-        lockTree = false;
+        //lockTree = false;
     }
 
     private void OnMouseDown()

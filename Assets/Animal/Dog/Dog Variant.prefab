@@ -159,7 +159,7 @@ PrefabInstance:
     - target: {fileID: 6016020228374427290, guid: 9e8603c8a0a911449967d99ad02a8369, type: 3}
       propertyPath: animator
       value: 
-      objectReference: {fileID: 9196804283075057165}
+      objectReference: {fileID: 5529689913386032413}
     - target: {fileID: 6016020228374427290, guid: 9e8603c8a0a911449967d99ad02a8369, type: 3}
       propertyPath: viewJump
       value: 
@@ -189,13 +189,42 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4431063976304483342, guid: 9e8603c8a0a911449967d99ad02a8369, type: 3}
       insertIndex: -1
       addedObject: {fileID: 231809429168962441}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5235137201794429888, guid: 9e8603c8a0a911449967d99ad02a8369, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5529689913386032413}
   m_SourcePrefab: {fileID: 100100000, guid: 9e8603c8a0a911449967d99ad02a8369, type: 3}
 --- !u!4 &66198813405950918 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4431063976304483342, guid: 9e8603c8a0a911449967d99ad02a8369, type: 3}
   m_PrefabInstance: {fileID: 4437561094876540872}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8445256186446879752 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5235137201794429888, guid: 9e8603c8a0a911449967d99ad02a8369, type: 3}
+  m_PrefabInstance: {fileID: 4437561094876540872}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &5529689913386032413
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8445256186446879752}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f2e05b97b23507446b277d56d2bdba73, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &7594900599791933140
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -207,6 +236,10 @@ PrefabInstance:
     - target: {fileID: -8653719598885068355, guid: 6e7d9de2752f80e4a8aae3dd47a5e3b3, type: 3}
       propertyPath: m_Name
       value: Dog
+      objectReference: {fileID: 0}
+    - target: {fileID: -8653719598885068355, guid: 6e7d9de2752f80e4a8aae3dd47a5e3b3, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8478553540853150096, guid: 6e7d9de2752f80e4a8aae3dd47a5e3b3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -454,9 +487,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 6e7d9de2752f80e4a8aae3dd47a5e3b3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 9196804283075057165}
-    - targetCorrespondingSourceObject: {fileID: -8653719598885068355, guid: 6e7d9de2752f80e4a8aae3dd47a5e3b3, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 7440920949206988689}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: 6e7d9de2752f80e4a8aae3dd47a5e3b3, type: 3}
 --- !u!1 &7962731399153284969 stripped
@@ -464,27 +494,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -8653719598885068355, guid: 6e7d9de2752f80e4a8aae3dd47a5e3b3, type: 3}
   m_PrefabInstance: {fileID: 7594900599791933140}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &9196804283075057165
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7962731399153284969}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f2e05b97b23507446b277d56d2bdba73, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!210 &7440920949206988689
 SortingGroup:
   m_ObjectHideFlags: 0

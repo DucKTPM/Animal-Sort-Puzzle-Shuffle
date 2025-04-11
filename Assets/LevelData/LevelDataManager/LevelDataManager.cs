@@ -8,13 +8,18 @@ using UnityEngine.UIElements;
 
 public class LevelDataManager : MonoBehaviour
 {
+    
     [SerializeField] private List<TextAsset> levelDataList;
     private int currentLevelIndex
     {
-        get=>PlayerPrefs.GetInt("currentLevelIndex",1);
-        set=> PlayerPrefs.SetInt("currentLevelIndex",value);
-        
+        get => PlayerPrefs.GetInt("currentLevelIndex", 1);
+        set
+        {
+            PlayerPrefs.SetInt("currentLevelIndex", value);
+            PlayerPrefs.Save(); // đảm bảo ghi xuống ổ cứng ngay lập tức
+        }
     }
+    
 
     private void Awake()
     {
