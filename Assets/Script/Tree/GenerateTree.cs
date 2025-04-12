@@ -21,6 +21,7 @@ public class GenerateTree : MonoBehaviour
 
     public void StartGenerateTree(LevelData levelData)
     {
+        
         if (listTreeSpawned.Count != 0)
             listTreeSpawned.Clear();
         StartCoroutine(IeGenerateTree(levelData));
@@ -103,6 +104,7 @@ public class GenerateTree : MonoBehaviour
 
     private IEnumerator IeGenerateTree(LevelData levelData)
     {
+        yield return new WaitForSeconds(0.1f);
         int slot = 0;
         int type = 0;
         int sumTrees = levelData.standConfig.Length;
@@ -195,6 +197,7 @@ public class GenerateTree : MonoBehaviour
 
         SpawnObstace(levelData.extralsConfig);
         yield return null;
+       // GameManager.Instance.Setup();
     }
 
   
@@ -202,7 +205,7 @@ public class GenerateTree : MonoBehaviour
     {
         if (levelDataExtralConfig == null)
         {
-            Debug.Log("LevelDataExtralConfig is null");
+          //  Debug.Log("LevelDataExtralConfig is null");
         }
         else
         {

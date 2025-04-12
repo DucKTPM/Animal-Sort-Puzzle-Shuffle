@@ -349,8 +349,9 @@ public class Tree : MonoBehaviour
     }
 
     private IEnumerator JumpOut()
-    {
-        
+    {   var coppyList = new List<Animal>(listAnimalOnTree);
+        listAnimalOnTree.Clear();
+        GameManager.Instance.StartCheckWinGame();
         var targetPosition = Camera.main.WorldToViewportPoint(transform.position);
         if (targetPosition.x > 0.5f)
         {
@@ -363,8 +364,7 @@ public class Tree : MonoBehaviour
             position.x = anchorSpawnAninmalRight.position.x;
         }
         lockTree = true;
-        var coppyList = new List<Animal>(listAnimalOnTree);
-        listAnimalOnTree.Clear();
+        
         foreach (var animal in coppyList)
         {
             animal.SetAnimationSmile();
@@ -390,7 +390,8 @@ public class Tree : MonoBehaviour
         }
         
         lockTree = false;
-        GameManager.Instance.StartCheckWinGame();
+       
+       
     }
 
     private bool CheckEnoghAnimalOnTree()
