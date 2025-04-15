@@ -7,9 +7,9 @@ public class Cage : MonoBehaviour
     [SerializeField] private Lock _lock;
     public Lock Lock => _lock;
     public void UnLockCage()
-    {
+    { _lock.Hide();
         StartCoroutine(IeUnLockCage());
-        _lock.Hide();
+       
     }
 
     private IEnumerator IeUnLockCage()

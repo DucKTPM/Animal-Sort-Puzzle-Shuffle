@@ -42,9 +42,11 @@ public class Animal : MonoBehaviour
     }
 
     public void SetEggEmpty()
-    {       
-          egg.BreakEgg();
-            egg = null;
+    {      
+        Debug.Log(nameAnimal);
+        viewAnimal.SetActive(true);
+          // egg.BreakEgg();
+          //   egg = null;
     }
 
     public void HideHammer()
@@ -55,6 +57,7 @@ public class Animal : MonoBehaviour
     public void SetEgg(Egg egg)
     {
         this.egg = egg;
+        viewAnimal.SetActive(false);
     }
 
     public void SetKeyUnlocked(KeyUnlock keyUnlock)
@@ -106,12 +109,7 @@ public class Animal : MonoBehaviour
     {
         animator.SetTrigger("Click");
     }
-
-    private void ChangeColor()
-    {
-        animalRenderer.color = Color.yellow;
-    }
-
+    
     public void RemoveClickedAnimal()
     {
         if (animator!=null)
@@ -133,7 +131,7 @@ public class Animal : MonoBehaviour
 
     public void SetAnimationSmile()
     {
-       // animator.SetTrigger("Smile");
+       animator.SetTrigger("Smile");
        // animator.SetTrigger("Smile");
         
     }
@@ -142,7 +140,7 @@ public class Animal : MonoBehaviour
     private IEnumerator IeJump(Vector3 startPosition, Vector3 endPosition, float heightMultiplier, Tree anchorTree , bool flagShake)
     {
         AudioManager.instance.PlayJump();
-        viewJump.SetActive(true);
+       // viewJump.SetActive(true);
         var viewEndPostion = Camera.main.WorldToViewportPoint(endPosition);
         var posAnimal = Camera.main.WorldToViewportPoint(this.transform.position);
         if (viewEndPostion.x < posAnimal.x)
@@ -153,13 +151,15 @@ public class Animal : MonoBehaviour
         {
             viewJump.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
-        viewAnimal.SetActive(false);
+       
         float elapsedTime = 0f;
         float duration = 0.8f;// time nhảy
         float maxHeight = Vector3.Distance(startPosition, endPosition) * heightMultiplier; // Độ cao tối đa
 
         while (elapsedTime < duration)
         {
+            viewAnimal.SetActive(false);
+            viewJump.SetActive(true);
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / duration;
 

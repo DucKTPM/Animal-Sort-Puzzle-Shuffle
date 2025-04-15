@@ -11,6 +11,7 @@ public class Bomb : MonoBehaviour
     [SerializeField] private TextMeshPro textMesh;
     [SerializeField] private MeshRenderer meshRenderer;
     [SerializeField] private Animator animator;
+  
 
     private void OnEnable()
     {
@@ -33,5 +34,15 @@ public class Bomb : MonoBehaviour
     {
        animator.SetTrigger("Bum");
        textMesh.gameObject.SetActive(false);
+       StartCoroutine(IeHideBomb());
+    }
+
+    private IEnumerator IeHideBomb()
+    {
+        for (int i = 0; i < 16; i++)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        gameObject.SetActive(false);
     }
 }

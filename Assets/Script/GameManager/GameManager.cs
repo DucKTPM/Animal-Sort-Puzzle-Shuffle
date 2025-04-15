@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private List<Animal> listAnimals;
     [SerializeField] private Confetti confetti1;
     [SerializeField] private Confetti confetti2;
+    public bool PauseGame = false;
     public int NumberUndo => numberUndo;
     public int NextLevel => nextLevel;
     bool flagCheckNextLevel = false;
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour
     {
         if (coroutineRestart == null && stateGame )
         {
+       
             if (croutineWaitWinGame != null)
             {
                 StopCoroutine(croutineWaitWinGame);
@@ -45,6 +47,7 @@ public class GameManager : MonoBehaviour
             gameView.AnimalsCancelClicked();
             ClearLevelPlay();
             coroutineRestart = StartCoroutine(IeRestartGame());
+            stateGame = false;
         }
     }
 
@@ -82,6 +85,7 @@ public class GameManager : MonoBehaviour
  
     public void Setup()
     {
+        PauseGame= false;
         stateGame = true;
         menuGameOver.Hide();
         gameView.AnimalsCancelClicked();
@@ -115,6 +119,12 @@ public class GameManager : MonoBehaviour
     private IEnumerator IeUpdateUserControlType1()
     {
         yield return new WaitUntil(() => valueTimeBomb <= 0);
+        if (croutineWaitWinGame != null)
+        {
+            StopCoroutine(croutineWaitWinGame);
+            stateGame = false;
+            croutineWaitWinGame = null;
+        }
         bomb.SetEffectBum();
         yield return new WaitForSeconds(1f);
         ClearLevelPlay();
@@ -128,11 +138,11 @@ public class GameManager : MonoBehaviour
         yield return new WaitUntil(() => stateGame == false);
         if (flagCheckNextLevel == false)
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.5f);
         }
         else
         {
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(0.5f);
         }
         AudioManager.instance.PlayWinAudio();
         ShowEffectWinGame();
@@ -303,6 +313,8 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitUntil(() => gameView.Steps.Count > 0);
             SetUnInvisibleUndo();
+            yield return new WaitUntil(()=>!stateGame);
+            SetInvisibleUndo();
             yield return new WaitUntil(() => gameView.Steps.Count <= 0);
             SetInvisibleUndo();
         }
@@ -321,10 +333,10 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator IeUpdateAddTree()
     {
-        yield return new WaitUntil(() => stateGame == false);
+        yield return new WaitUntil(() => stateGame == false );
         flagCheckAddTrees = true;
         SetInvisbleAddTree();
-        yield return new WaitUntil(() => stateGame == true);
+        yield return new WaitUntil(() => stateGame == true && addTrees >0);
         flagCheckAddTrees = false;
         SetUnInvisbleAddTree();
     }

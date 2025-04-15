@@ -104,7 +104,7 @@ public class GenerateTree : MonoBehaviour
 
     private IEnumerator IeGenerateTree(LevelData levelData)
     {
-        yield return new WaitForSeconds(0.1f);
+       // yield return new WaitForSeconds(0.1f);
         int slot = 0;
         int type = 0;
         int sumTrees = levelData.standConfig.Length;
@@ -218,6 +218,7 @@ public class GenerateTree : MonoBehaviour
                 int extravalueHammer = levelDataExtralConfig[j].extralValues[0];
                 if (type == 1)
                 {
+                   // Debug.Log(type);
                     var animal = listTreeSpawned[indexStand]
                         .AnimalsOnTree[listTreeSpawned[indexStand].AnimalsOnTree.Count - indexBird - 1];
                     var obj = Instantiate(this.bomb, animal.transform.position, Quaternion.identity);
@@ -275,6 +276,7 @@ public class GenerateTree : MonoBehaviour
                                 obj.transform.parent = variaAnimal.transform;
                                 variaAnimal.SetHammer(obj);
                                 obj.SetEgg(egg);
+                                obj.SetAnimal(animal);
                                 goto endLoop;
                             }
                         }

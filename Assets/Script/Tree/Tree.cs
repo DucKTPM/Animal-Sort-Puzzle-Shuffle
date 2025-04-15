@@ -292,6 +292,10 @@ public class Tree : MonoBehaviour
 
     private void OnMouseDown()
     {
+        if (GameManager.Instance.PauseGame)
+        {
+            return;
+        }
         if (GameView.Instance.StateClickedTree == true && lockTree !=true && GameManager.Instance.StateGame == true ) // nếu có cây được chọn
         {
             if (GameView.Instance.GetTree() == this) // kiểm tra cây được chọn phải là cây này
@@ -512,7 +516,7 @@ public class Tree : MonoBehaviour
 
     public void UnlockTree()
     {
-        lockTree = false;
+       
         StartCoroutine(IeWaitUnlockTree());
       
     }
@@ -520,7 +524,7 @@ public class Tree : MonoBehaviour
     private IEnumerator IeWaitUnlockTree()
     {
         yield return new WaitForSeconds(1.5f);
-        
+        lockTree = false;
         cageTree.gameObject.SetActive(false);
     }
 }

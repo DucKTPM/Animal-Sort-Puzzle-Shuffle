@@ -51,9 +51,11 @@
     <Compile Include="Assets\Script\GamView\GameView.cs" />
     <Compile Include="Assets\Script\Obstacle\Bomb\Bomb.cs" />
     <Compile Include="Assets\Script\Tree\Tree.cs" />
+    <Compile Include="Assets\Script\Popup\Button\Setting.cs" />
     <Compile Include="Assets\Script\Popup\Confetti\Confetti.cs" />
     <Compile Include="Assets\Script\Obstacle\Type5\CageTree.cs" />
     <Compile Include="Assets\Script\Obstacle\Type2\KeyUnlock.cs" />
+    <Compile Include="Assets\Script\Popup\PopupMenu\MenuSetting.cs" />
     <Compile Include="Assets\Script\Obstacle\Type2\Lock.cs" />
     <Compile Include="Assets\Script\Popup\MenuWinGame\MenuWinGame.cs" />
     <Compile Include="Assets\Script\Tree\GenerateTree.cs" />

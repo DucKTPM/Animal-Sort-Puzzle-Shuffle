@@ -19,11 +19,10 @@ public class KeyUnlock : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, cage.transform.position, Time.deltaTime*1f);
             yield return null;
         }
-        yield return new WaitForSeconds(1f);
+       // yield return new WaitForSeconds(1f);
         gameObject.SetActive(false);
         if (GameManager.Instance.TypeEffectItem == 2)
         {
-         
             GameManager.Instance.AnimalOnCage.UnlockCage();
         }
         else
