@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Assets\Script\Tree\SpawnText.cs" />
     <Compile Include="Assets\Script\Obstacle\Type3\Hammer.cs" />
+    <Compile Include="Assets\Script\Popup\PopupMenu\Share.cs" />
     <Compile Include="Assets\Script\Popup\Level\LevelPopup.cs" />
     <Compile Include="Assets\Script\GamView\GameView.cs" />
     <Compile Include="Assets\Script\Obstacle\Bomb\Bomb.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Assets\LevelData\LevelDataManager\LevelDataManager.cs" />
     <Compile Include="Assets\Script\Obstacle\Type2\Cage.cs" />
     <Compile Include="Assets\Animal\Animal.cs" />
+    <Compile Include="Assets\Script\Popup\PopupMenu\SoundGame.cs" />
     <Compile Include="Assets\Script\Popup\Button\AnimationButton.cs" />
     <Compile Include="Assets\Script\Obstacle\Item.cs" />
     <Compile Include="Assets\Script\GamView\Step.cs" />
@@ -706,6 +708,7 @@
     <None Include="Assets\LevelData\Levels Raw Data\Level_350.json" />
     <None Include="Assets\LevelData\Levels Raw Data\Level_805.json" />
     <None Include="Assets\LevelData\Levels Raw Data\Level_2089.json" />
+    <None Include="Assets\Script\Popup\PopupMenu\UnityNativeShare-master\LICENSE.txt" />
     <None Include="Assets\LevelData\Levels Raw Data\Level_4343.json" />
     <None Include="Assets\LevelData\Levels Raw Data\Level_1661.json" />
     <None Include="Assets\LevelData\Levels Raw Data\Level_1043.json" />
@@ -1025,6 +1028,7 @@
     <None Include="Assets\LevelData\Levels Raw Data\Level_958.json" />
     <None Include="Assets\LevelData\Levels Raw Data\Level_4062.json" />
     <None Include="Assets\LevelData\Levels Raw Data\Level_2392.json" />
+    <None Include="Assets\Script\Popup\PopupMenu\UnityNativeShare-master\package.json" />
     <None Include="Assets\LevelData\Levels Raw Data\Level_3893.json" />
     <None Include="Assets\LevelData\Levels Raw Data\Level_535.json" />
     <None Include="Assets\LevelData\Levels Raw Data\Level_132.json" />
@@ -5182,14 +5186,14 @@
     <Reference Include="Unity.2D.Common.Runtime">
       <HintPath>E:\Unity\File Project\Animal Sort Puzzle Shuffle\Library\ScriptAssemblies\Unity.2D.Common.Runtime.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>E:\Unity\File Project\Animal Sort Puzzle Shuffle\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.2D.Tilemap.Extras.Editor">
       <HintPath>E:\Unity\File Project\Animal Sort Puzzle Shuffle\Library\ScriptAssemblies\Unity.2D.Tilemap.Extras.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>E:\Unity\File Project\Animal Sort Puzzle Shuffle\Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>E:\Unity\File Project\Animal Sort Puzzle Shuffle\Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
       <HintPath>E:\Unity\File Project\Animal Sort Puzzle Shuffle\Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll</HintPath>
@@ -5233,20 +5237,28 @@
     <Reference Include="Unity.VisualScripting.State">
       <HintPath>E:\Unity\File Project\Animal Sort Puzzle Shuffle\Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.2D.SpriteShape.Editor">
-      <HintPath>E:\Unity\File Project\Animal Sort Puzzle Shuffle\Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
       <HintPath>E:\Unity\File Project\Animal Sort Puzzle Shuffle\Library\ScriptAssemblies\Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Animation.Editor">
       <HintPath>E:\Unity\File Project\Animal Sort Puzzle Shuffle\Library\ScriptAssemblies\Unity.2D.Animation.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.2D.SpriteShape.Editor">
+      <HintPath>E:\Unity\File Project\Animal Sort Puzzle Shuffle\Library\ScriptAssemblies\Unity.2D.SpriteShape.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.IK.Editor">
       <HintPath>E:\Unity\File Project\Animal Sort Puzzle Shuffle\Library\ScriptAssemblies\Unity.2D.IK.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="NativeShare.Runtime.csproj">
+      <Project>{0ce8870c-e244-7f08-08e4-681800e4ee93}</Project>
+      <Name>NativeShare.Runtime</Name>
+    </ProjectReference>
+    <ProjectReference Include="NativeShare.Editor.csproj">
+      <Project>{1d74f6fd-d28a-0ffb-9298-75da6584055f}</Project>
+      <Name>NativeShare.Editor</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

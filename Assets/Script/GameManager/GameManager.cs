@@ -136,21 +136,31 @@ public class GameManager : MonoBehaviour
     private IEnumerator StartWaitWinGame()
     {
         yield return new WaitUntil(() => stateGame == false);
+        
         if (flagCheckNextLevel == false)
         {
-            yield return new WaitForSeconds(0.5f);
+            
+            yield return new WaitForSeconds(2f);
+            AudioManager.instance.PlayWinAudio();
+            ShowEffectWinGame();
+            levelDataManager.NextLevelIndex();
+            var dataAnimal = levelDataManager.ReadLevelData();
+            int indexAnimal = dataAnimal.standConfig[0].idBirds[0];
+            menuWinGame.SpawnAnimal(indexAnimal);
+            ClearLevelPlay();
         }
         else
         {
+           
+            AudioManager.instance.PlayWinAudio();
+            ShowEffectWinGame();
+            levelDataManager.NextLevelIndex();
+            var dataAnimal = levelDataManager.ReadLevelData();
+            int indexAnimal = dataAnimal.standConfig[0].idBirds[0];
+            menuWinGame.SpawnAnimal(indexAnimal);
+            ClearLevelPlay();
             yield return new WaitForSeconds(0.5f);
         }
-        AudioManager.instance.PlayWinAudio();
-        ShowEffectWinGame();
-        levelDataManager.NextLevelIndex();
-        var dataAnimal = levelDataManager.ReadLevelData();
-        int indexAnimal = dataAnimal.standConfig[0].idBirds[0];
-        menuWinGame.SpawnAnimal(indexAnimal);
-        ClearLevelPlay();
         menuWinGame.Show();
     }
 
@@ -253,13 +263,13 @@ public class GameManager : MonoBehaviour
 
         if (nextLevel > 0)
         {
-            flagCheckNextLevel = false;
-            Color color3 = imgaeNextLevel.color;
-            color3.a = 1;
-            imgaeNextLevel.color = color3;
-            Color color = textNextLevel.color;
-            color.a = 1;
-            textNextLevel.color = color;
+          
+            // Color color3 = imgaeNextLevel.color;
+            // color3.a = 1;
+            // imgaeNextLevel.color = color3;
+            // Color color = textNextLevel.color;
+            // color.a = 1;
+            // textNextLevel.color = color;
         }
         else
         {
@@ -274,11 +284,14 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator IeUpdateNextLevel()
     {
+        flagCheckNextLevel = true;
+       yield return new WaitForSeconds(1f);
+       flagCheckNextLevel = false;
         while (true)
         {
             yield return new WaitUntil(() => stateGame && nextLevel > 0);
             UnInvisibleNextLevel();
-            yield return new WaitUntil(() => stateGame == false);
+            yield return new WaitUntil(() => stateGame == false && flagCheckNextLevel == true);
             InvisibleNextLevel();
         }
     }
