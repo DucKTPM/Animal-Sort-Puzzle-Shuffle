@@ -35,6 +35,12 @@ public class GameManager : MonoBehaviour
 
     public GameObject totalPanel;
 
+    private void Start()
+    {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 60;
+    }
+
     public void RestartGame()
     {
         if (coroutineRestart == null && stateGame )
@@ -140,7 +146,7 @@ public class GameManager : MonoBehaviour
         if (flagCheckNextLevel == false)
         {
             
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(3f);
             AudioManager.instance.PlayWinAudio();
             ShowEffectWinGame();
             levelDataManager.NextLevelIndex();

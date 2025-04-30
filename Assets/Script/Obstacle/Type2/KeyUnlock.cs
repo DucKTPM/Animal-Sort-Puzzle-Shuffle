@@ -16,7 +16,7 @@ public class KeyUnlock : MonoBehaviour
         transform.parent = null;
         while (Vector3.Distance(cage.transform.position, transform.position) > 0.1f)
         {
-            transform.position = Vector3.MoveTowards(transform.position, cage.transform.position, Time.deltaTime*1f);
+            transform.position = Vector3.MoveTowards(transform.position, cage.transform.position, Time.deltaTime*5f);
             yield return null;
         }
        // yield return new WaitForSeconds(1f);

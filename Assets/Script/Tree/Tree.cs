@@ -263,9 +263,11 @@ public class Tree : MonoBehaviour
     private IEnumerator IeMoveAnimail(Vector3 checkSideViewPos, List<Animal> listAnimalsMove, int countToMove)
     {
       //  lockTree=true;
+      List<Animal> animailsJumped = new List<Animal>();
         for (int i = 0; i < countToMove; i++)
         {
-            AnimalsOnTree.Add(listAnimalsMove[i]);
+            animailsJumped.Add(listAnimalsMove[i]);
+             AnimalsOnTree.Add(listAnimalsMove[i]);
             listAnimalsMove[i].Jump(position, 0.5f, this,true);
             Vector3 newPosition = position;
             if (checkSideViewPos.x <= 0.5f)
@@ -283,7 +285,7 @@ public class Tree : MonoBehaviour
 
         if (CheckEnoghAnimalOnTree()!= true)
         {
-            AddStepToList(listAnimalsMove,GameView.Instance.GetTree(),this);
+            AddStepToList(animailsJumped,GameView.Instance.GetTree(),this);
         }
         GameManager.Instance.AnimalJump();
         yield return new WaitForSeconds(0.9f);

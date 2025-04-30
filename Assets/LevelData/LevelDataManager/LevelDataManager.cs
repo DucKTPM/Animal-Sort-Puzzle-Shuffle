@@ -9,10 +9,11 @@ using UnityEngine.UIElements;
 public class LevelDataManager : MonoBehaviour
 {
     
+    
     [SerializeField] private List<TextAsset> levelDataList;
     private int currentLevelIndex
     {
-        get => PlayerPrefs.GetInt("currentLevelIndex", 1);
+        get => PlayerPrefs.GetInt("currentLevelIndex",1);
         set
         {
             PlayerPrefs.SetInt("currentLevelIndex", value);

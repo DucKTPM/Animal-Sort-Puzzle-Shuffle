@@ -67,6 +67,7 @@
     <Compile Include="Assets\Script\Obstacle\Type2\Cage.cs" />
     <Compile Include="Assets\Animal\Animal.cs" />
     <Compile Include="Assets\Script\Popup\PopupMenu\SoundGame.cs" />
+    <Compile Include="Assets\Script\Background\BackGround.cs" />
     <Compile Include="Assets\Script\Popup\Button\AnimationButton.cs" />
     <Compile Include="Assets\Script\Obstacle\Item.cs" />
     <Compile Include="Assets\Script\GamView\Step.cs" />

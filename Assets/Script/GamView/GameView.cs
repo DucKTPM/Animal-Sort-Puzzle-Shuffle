@@ -36,11 +36,11 @@ public class GameView : MonoBehaviour
             var step = steps[steps.Count - 1];
             var checkSideViewPos = Camera.main.WorldToViewportPoint(step.TreeStart.transform.position);
             Vector3 newPosition = step.TreeStart.PositionMove;
-            foreach (var animal in step.Animals)
+            for (int i = step.Animals.Count-1; i >=0; i--)
             {
-                step.TreeStart.AnimalsOnTree.Add(animal);
-                animal.Jump(step.TreeStart.PositionMove,0.5f,step.TreeStart,true);
-                step.TreeEnd.RemoveAnimal(animal);
+                step.TreeStart.AnimalsOnTree.Add( step.Animals[i]);
+                step.Animals[i].Jump(step.TreeStart.PositionMove,0.5f,step.TreeStart,true);
+                step.TreeEnd.RemoveAnimal( step.Animals[i]);
                
                 if (checkSideViewPos.x <= 0.5f)
                 {
@@ -51,8 +51,24 @@ public class GameView : MonoBehaviour
                     newPosition.x -= 0.5f;
                 }
                 step.TreeStart.SetPostionMove(newPosition);
-
             }
+            // foreach (var animal in step.Animals)
+            // {
+            //     step.TreeStart.AnimalsOnTree.Add(animal);
+            //     animal.Jump(step.TreeStart.PositionMove,0.5f,step.TreeStart,true);
+            //     step.TreeEnd.RemoveAnimal(animal);
+            //    
+            //     if (checkSideViewPos.x <= 0.5f)
+            //     {
+            //         newPosition.x += 0.5f;
+            //     }
+            //     else
+            //     {
+            //         newPosition.x -= 0.5f;
+            //     }
+            //     step.TreeStart.SetPostionMove(newPosition);
+            //
+            // }
 
             steps.Remove(step);
             GameManager.Instance.UndoClick();

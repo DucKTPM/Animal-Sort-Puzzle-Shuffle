@@ -166,7 +166,7 @@ PrefabInstance:
       objectReference: {fileID: 5869729791447542328}
     - target: {fileID: 6016020228374427290, guid: 9e8603c8a0a911449967d99ad02a8369, type: 3}
       propertyPath: nameAnimal
-      value: 1
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6016020228374427290, guid: 9e8603c8a0a911449967d99ad02a8369, type: 3}
       propertyPath: viewAnimal

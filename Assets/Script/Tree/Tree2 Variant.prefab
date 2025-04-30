@@ -227,7 +227,7 @@ PrefabInstance:
     - target: {fileID: 1482358594780742971, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
       propertyPath: animals.Array.data[1]
       value: 
-      objectReference: {fileID: 7991726375753472338, guid: 71541a34673b4ab428516fed029a58b8, type: 3}
+      objectReference: {fileID: 8651141976027939906, guid: 4bec436d06095ff4b8e622bef934f603, type: 3}
     - target: {fileID: 1482358594780742971, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
       propertyPath: animals.Array.data[2]
       value: 
@@ -255,7 +255,7 @@ PrefabInstance:
     - target: {fileID: 1482358594780742971, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
       propertyPath: animals.Array.data[8]
       value: 
-      objectReference: {fileID: 8651141976027939906, guid: 4bec436d06095ff4b8e622bef934f603, type: 3}
+      objectReference: {fileID: 7991726375753472338, guid: 71541a34673b4ab428516fed029a58b8, type: 3}
     - target: {fileID: 1482358594780742971, guid: 2b8e84ff8313d8d4d822aae4e84d5c9c, type: 3}
       propertyPath: animals.Array.data[9]
       value: 
