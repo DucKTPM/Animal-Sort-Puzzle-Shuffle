@@ -326,16 +326,31 @@ public class GameManager : MonoBehaviour
 
     bool flagCheckUndo = false;
 
+    private void Update()
+    {
+        if (gameView.Steps.Count <= 0)
+        {
+            SetInvisibleUndo();
+        }
+
+        if (gameView.Steps.Count > 0)
+        {
+            SetUnInvisibleUndo();
+        }
+
+        if (stateGame == false)
+        {
+            InvisibleNextLevel();
+        }
+    }
+
     private IEnumerator IeUndo()
     {
         while (true)
-        {
-            yield return new WaitUntil(() => gameView.Steps.Count > 0);
-            SetUnInvisibleUndo();
+        { 
             yield return new WaitUntil(()=>!stateGame);
             SetInvisibleUndo();
-            yield return new WaitUntil(() => gameView.Steps.Count <= 0);
-            SetInvisibleUndo();
+            
         }
     }
 
