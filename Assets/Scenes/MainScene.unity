@@ -8570,8 +8570,8 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1534870726}
   m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -757585715
+  m_SortingLayer: 1
   m_SortingOrder: 101
   m_SortAtRoot: 0
 --- !u!114 &1534870730
@@ -9230,7 +9230,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1698480746}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!4 &1698480749
 Transform:
   m_ObjectHideFlags: 0
