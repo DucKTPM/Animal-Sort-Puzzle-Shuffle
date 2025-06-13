@@ -347,7 +347,7 @@ public class Tree : MonoBehaviour
                 GameView.Instance.SetAnimalsClick(listAnimalsCanMove);
             }
            
-        }
+        }   
         else
         {
             GameView.Instance.AnimalsCancelClicked();
